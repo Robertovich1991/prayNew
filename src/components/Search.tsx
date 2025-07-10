@@ -5,13 +5,13 @@ import SearchItem from './SearchItem';
 import { responsiveWidth } from '../common/utils';
 import SearchIcon from '../assets/img/icons/search.svg';
 import { useFocusEffect } from '@react-navigation/native';
-import store from 'store';
 import { observer } from 'mobx-react';
 import { T_KEYS } from 'assets/translations';
 import useOwnTranslation from 'hooks/useOwnTranslation';
 import { useKeyboard } from 'hooks/useKeyboard';
 import { useTheme } from '@rneui/themed';
 import { CustomizationColors } from 'styles/customization';
+import store from 'store';
 
 const Search = () => {
   const [state, setState] = useState({ search: '' });

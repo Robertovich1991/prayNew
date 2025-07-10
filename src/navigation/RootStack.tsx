@@ -47,6 +47,8 @@ import TaskSocialTasksPerformingRitual from 'screens/confession-room/task-social
 const RootStack = createStackNavigator();
 
 export default () => {
+  console.log('------------------------------------------------------------');
+  
   return (
     <>
       <RootStack.Navigator

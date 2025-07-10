@@ -17,7 +17,7 @@ import store from 'store';
 import { observer } from 'mobx-react';
 import { useFocusEffect } from '@react-navigation/native';
 import SimpleModal from 'screens/modals/SimpleModal';
-import { Product } from 'react-native-iap';
+// import { Product } from 'react-native-iap';
 import ThanksModal from 'screens/modals/ThanksModal';
 import { LogEvent, af_donation_started } from 'helpers/logEvents';
 import { useTheme } from '@rneui/themed';

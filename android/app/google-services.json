@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "1027039818701",
+    "project_id": "prayers-for-africa",
+    "storage_bucket": "prayers-for-africa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1027039818701:android:cd46e693c7b1677ea0ca84",
+        "android_client_info": {
+          "package_name": "ru.nsstms.prayersforafrica.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1027039818701-8701mbnt4plep4gv2suia59v8nb2al8o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.nsstms.prayersforafrica.app",
+            "certificate_hash": "4629de0a2e6c667ff0bf4fcd68379505c4b3229c"
+          }
+        },
+        {
+          "client_id": "1027039818701-lj3i2rnvp0ptb4pjhlumer8ddpe3s46f.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.nsstms.prayersforafrica.app",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1027039818701-n8jvh3dnm7i20r1ocq96mc0ccv01kcbq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.nsstms.prayersforafrica.app",
+            "certificate_hash": "1d14f73e44ed07a91008c8651991104ec61185d1"
+          }
+        },
+        {
+          "client_id": "1027039818701-3vihtfu87p0nlvaegh5pedf07q1m2b55.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlRQ6gq1rfjmq1vjABvbnPVd3XhKVS3uk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1027039818701-3vihtfu87p0nlvaegh5pedf07q1m2b55.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

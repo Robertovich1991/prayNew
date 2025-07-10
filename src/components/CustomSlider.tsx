@@ -2,10 +2,10 @@ import { Dimensions, View, StyleSheet } from 'react-native';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import React, { useEffect, useState } from 'react';
 import { responsiveWidth } from '../common/utils';
-import store from 'store';
 import CarouselItem from './CarouselItem';
 import { observer } from 'mobx-react';
 import { CustomizationColors } from 'styles/customization';
+import store from 'store';
 
 const { width } = Dimensions.get('window');
 

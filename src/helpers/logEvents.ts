@@ -1,5 +1,5 @@
 import appsFlyer from 'react-native-appsflyer';
-import { AppEventsLogger, Params } from 'react-native-fbsdk-next';
+// import { AppEventsLogger, Params } from 'react-native-fbsdk-next';
 
 const initOptions = {
   devKey: 'aVDwWKkqyfNVAxmcWTmziP',

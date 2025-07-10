@@ -8,9 +8,9 @@ import PlayfairTitle from '../PlayfairTitle';
 import CustomText from 'components/CustomText';
 import { T_KEYS } from 'assets/translations';
 import useOwnTranslation from 'hooks/useOwnTranslation';
-import store from 'store';
 import { observer } from 'mobx-react';
 import { useTheme } from '@rneui/themed';
+import store from 'store';
 
 interface ThanksCardProps {
   closeCard: () => void;

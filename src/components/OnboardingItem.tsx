@@ -2,7 +2,7 @@
 import { responsiveWidth } from 'common/utils';
 import React from 'react';
 import { View, StyleSheet, Image, ImageBackground } from 'react-native';
-import { Pagination } from 'react-native-snap-carousel';
+ import { Pagination } from 'react-native-snap-carousel';
 import AnimatedCross from './AnimatedCross';
 import CustomText from './CustomText';
 import PlayfairTitle from './PlayfairTitle';

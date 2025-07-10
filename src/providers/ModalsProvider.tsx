@@ -2,12 +2,12 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
-import store from 'store';
 import ModalContainer from './ModalContainer';
 import NetInfo from '@react-native-community/netinfo';
 import useDebounce from 'hooks/useDebounce';
 import { WINDOW_HEIGHT, WINDOW_WIDTH } from 'helpers/dimensions';
 import CustomText from 'components/CustomText';
+import store from 'store';
 
 NetInfo.configure({
   reachabilityUrl: 'https://clients3.google.com/generate_204',

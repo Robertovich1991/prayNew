@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import Navigation from './src/navigation/Navigation';
 import ModalsProvider from './src/providers/ModalsProvider';
 import './i18next.config';
 import { ThemeProvider } from '@rneui/themed';
 import { theme } from './src/styles/createTheme';
+import { View } from 'react-native';
 
 class App extends Component {
   render() {

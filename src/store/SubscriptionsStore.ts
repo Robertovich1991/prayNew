@@ -1,6 +1,6 @@
 import { restApiRoutes } from 'constants/rest-api';
 import { makeAutoObservable, runInAction } from 'mobx';
-import { SubscriptionPurchase } from 'react-native-iap';
+// import { SubscriptionPurchase } from 'react-native-iap';
 import { IRootStore } from '.';
 import {
   RegisteredSubscriptionBaseResponse,

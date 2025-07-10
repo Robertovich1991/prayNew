@@ -8,11 +8,11 @@ import NotAuthorizedStack from './NotAuthorizedStack';
 import RootStack from './RootStack';
 import { useCurrentUser } from 'hooks';
 import { useCurrentSettings } from 'hooks/useCurrentSettings';
-import SelectLanguage from 'screens/SelectLanguage';
-import MusicalAccompaniment from 'screens/MusicalAccompaniment';
 import PushNotificationSetting from 'screens/PushNotificationSetting';
 import { navigationRef } from './RefNavigation';
 import Container from 'components/Container';
+import SelectLanguage from '../screens/SelectLanguage';
+import MusicalAccompaniment from 'screens/MusicalAccompaniment';
 
 const theme = {
   ...DefaultTheme,
@@ -26,6 +26,7 @@ const Navigation = () => {
   const { isUserAuth, isUserInited, isUserInAuthorization } = useCurrentUser();
   const { settings, settingsInited } = useCurrentSettings();
   const { setMode: setThemeMode, mode: themeMode } = useThemeMode();
+console.log(isUserAuth,'..............................................................mmm');
 
   useEffect(() => {
     console.log('Navigation', {
@@ -44,11 +45,14 @@ const Navigation = () => {
   ]);
 
   const navigationWrapper = React.useMemo(() => {
+    console.log('========================');
+    
     if (settings?.theme && themeMode !== settings.theme) {
       setTimeout(() => {
         setThemeMode(settings.theme);
       }, 0);
     }
+console.log('[[[[[[[[[[[[[[[[[');
 
     if (isUserAuth) {
       if (!settingsInited) {
@@ -70,6 +74,7 @@ const Navigation = () => {
       if (typeof settings.isPushNotificationsActive === 'undefined') {
         return <PushNotificationSetting />;
       }
+console.log('pppppppppppppppppppppppp');
 
       return <RootStack />;
     } else {
@@ -80,6 +85,8 @@ const Navigation = () => {
           </Container>
         );
       } else {
+        console.log('qqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq');
+        
         return <NotAuthorizedStack />;
       }
     }
