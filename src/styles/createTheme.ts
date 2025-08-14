@@ -24,5 +24,5 @@ export const theme = createTheme({
     textColorQuaternary: defaultColors.GREY_TERTIARY,
     blackPrimaryToWhite: defaultColors.BLACK_PRIMARY,
   },
-  mode: 'dark',
+  mode: 'light',
 });

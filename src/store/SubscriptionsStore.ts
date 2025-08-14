@@ -121,23 +121,25 @@ class SubscriptionsStore {
         Date.now()
     ) {
       try {
-        const req =
+        console.log('trTTTTTTTTTTTTTTT');
+        
+        const res =
           await this._rootStore.restApi.request<RegisteredSubscriptionBaseResponse>(
             {
               method: 'POST',
-              path: restApiRoutes.REVOKE_SUBSCRIPTION,
+              path: restApiRoutes.UNSUBSCRIBE,
               withToken: true,
               successStatus: 201,
             },
           );
 
-        console.log('unsubscribe result', req);
+        console.log('unsubscribe result', res);
 
-        if (req?.result) {
+        if (res?.result) {
           runInAction(() => {
             if (this._rootStore.userStore.user) {
               const { user } = this._rootStore.userStore;
-              user.subscription = req.result;
+              user.subscription = res.result;
               this._rootStore.userStore.user = {
                 ...user,
               };
@@ -145,7 +147,7 @@ class SubscriptionsStore {
           });
         }
 
-        return req;
+        return res;
       } catch {
         return {
           error: 'Global error while googleIAPPayment fetching',

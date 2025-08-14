@@ -60,6 +60,8 @@ class WebSocketStore {
     this.client.onopen = async () => {
       console.log('WebSocketStore client onopen');
       const token = this._rootStore.userStore.accessToken;
+      console.log(token,'MMMMMMMMMM');
+      
       if (token) {
         try {
           await this.authorize();

@@ -42,10 +42,8 @@ const ReferalProgramHowItWorks = () => {
               color={theme.colors.textColorPrimary}
               fontSize={responsiveWidth(15)}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+             Copy your unique link and send it to the person you want to invite.
+After they register in the app, the bonus will be credited according to the Calculation Scheme.
             </CustomText>
           </View>
           <Divider height={responsiveWidth(12)} />
@@ -72,10 +70,7 @@ const ReferalProgramHowItWorks = () => {
               color={theme.colors.textColorPrimary}
               fontSize={responsiveWidth(15)}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              Click the SHARE button and the link will be copied to your clipboard, so you can paste it into a message for a potential invitee to the app.
             </CustomText>
           </View>
           <Divider height={responsiveWidth(12)} />
@@ -102,10 +97,7 @@ const ReferalProgramHowItWorks = () => {
               color={theme.colors.textColorPrimary}
               fontSize={responsiveWidth(15)}
             >
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              Once the person you invited registers, we will credit your bonus within 24 hours. You can see the bonus amount in the Calculation Scheme section, and check your current referrals in the YOUR REFERRALS list.
             </CustomText>
           </View>
         </ScrollView>

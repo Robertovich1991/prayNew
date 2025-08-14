@@ -22,6 +22,7 @@ import {
 import ErrorModal from 'screens/modals/ErrorModal';
 import { useTheme } from '@rneui/themed';
 import { CustomizationColors } from 'styles/customization';
+import { requestSubscription } from 'react-native-iap';
 
 const formatBillingPeriod = (billingPeriod: string) => {
   // Отрываем первую P
@@ -82,7 +83,7 @@ const CarouselItem = (props: { item: Subscription; index: number }) => {
   const googleSub = store.purchaseStore.availableSubscriptions.find(
     x => x.productId === item.googleSku,
   );
-  console.log('googleSub', JSON.stringify(googleSub));
+ 
 
   const currencyPerPeriod = () => {
     if (!googleSub) {
@@ -103,54 +104,64 @@ const CarouselItem = (props: { item: Subscription; index: number }) => {
   };
 
   const makeSubscription = async () => {
+   
+    console.log('9999999999999',item);
+   const skus=  await requestSubscription({
+        sku: 'standard_sub_1_month',
+       // appAccountToken: appAccountToken?.appAccountToken,
+      });
+      console.log(skus,'====+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+      
+    const result = await store.donationsStore.sendTransactionSub(skus);
+navigation.goBack()
     LogEvent('af_paid_subscription_started', { af_paid_subscription_started });
-    try {
-      store.modalStore.showSpinner('makeSubscription');
-      const sub = await store.subscriptionsStore.subscribe(item.id);
-      if (!sub) {
-        throw 'Not possible to subscribe, please try again later';
-      }
+    // try {
+    //   store.modalStore.showSpinner('makeSubscription');
+    //   const sub = await store.subscriptionsStore.subscribe(item.id);
+    //   if (!sub) {
+    //     throw 'Not possible to subscribe, please try again later';
+    //   }
 
-      if (sub.error) {
-        throw sub.error;
-      }
+    //   if (sub.error) {
+    //     throw sub.error;
+    //   }
 
-      if (!googleSub) {
-        throw 'Not available subscription, please try again later';
-      }
+    //   if (!googleSub) {
+    //     throw 'Not available subscription, please try again later';
+    //   }
 
-      const purchasedSub = await store.purchaseStore.purchaseProduct(
-        googleSub,
-        'sub',
-      );
+    //   const purchasedSub = await store.purchaseStore.purchaseProduct(
+    //     googleSub,
+    //     'sub',
+    //   );
 
-      console.log('purchasedSub', purchasedSub);
+    //   console.log('purchasedSub', purchasedSub);
 
-      if (purchasedSub) {
-        store.subscriptionsStore.updateSubscription(
-          purchasedSub.result as RegisteredSubscription,
-        );
-        store.modalStore.open(
-          <ThanksModal
-            title={thanksPhrase}
-            onCloseAction={() => {
-              navigation.goBack();
-            }}
-            source={'subscription-gratitude'}
-          />,
-        );
-      } else {
-        store.modalStore.open(<SimpleModal title={'Something went wrong'} />);
-      }
-    } catch (e: any) {
-      store.modalStore.open(
-        <SimpleModal
-          title={JSON.stringify(e) || 'Something process went wrong'}
-        />,
-      );
-    } finally {
-      store.modalStore.clearSpinner('makeSubscription');
-    }
+    //   if (purchasedSub) {
+    //     store.subscriptionsStore.updateSubscription(
+    //       purchasedSub.result as RegisteredSubscription,
+    //     );
+    //     store.modalStore.open(
+    //       <ThanksModal
+    //         title={thanksPhrase}
+    //         onCloseAction={() => {
+    //           navigation.goBack();
+    //         }}
+    //         source={'subscription-gratitude'}
+    //       />,
+    //     );
+    //   } else {
+    //     store.modalStore.open(<SimpleModal title={'Something went wrong'} />);
+    //   }
+    // } catch (e: any) {
+    //   store.modalStore.open(
+    //     <SimpleModal
+    //       title={JSON.stringify(e) || 'Something process went wrong'}
+    //     />,
+    //   );
+    // } finally {
+    //   store.modalStore.clearSpinner('makeSubscription');
+    // }
   };
 
   const handleUnsubscribe = () => {
@@ -165,6 +176,8 @@ const CarouselItem = (props: { item: Subscription; index: number }) => {
           try {
             store.modalStore.showSpinner('handleUnsubscribe');
             const res = await store.subscriptionsStore.unsubscribe();
+            console.log(res,'............----------,,............');
+            
             if (res?.result) {
               LogEvent('af_unsubscribe', { af_unsubscribe });
               navigation.goBack();
@@ -189,7 +202,7 @@ const CarouselItem = (props: { item: Subscription; index: number }) => {
         },
       },
     ]);
-  };
+ };
 
   return (
     <SafeAreaView
@@ -213,7 +226,7 @@ const CarouselItem = (props: { item: Subscription; index: number }) => {
               fontSize={responsiveWidth(26)}
               lineHeight={responsiveWidth(28)}
             >
-              {price()}
+              {/* {price()} */}$2.49/1 month
             </CustomText>
             <CustomText
               fontWeight="light"
@@ -221,7 +234,7 @@ const CarouselItem = (props: { item: Subscription; index: number }) => {
               color={theme.colors.textColorSecondary}
               style={styles.cents}
             >
-              {currencyPerPeriod()}
+              {/* {currencyPerPeriod()} */}
             </CustomText>
           </View>
         </View>

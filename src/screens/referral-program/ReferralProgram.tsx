@@ -35,9 +35,7 @@ const ReferalProgram = () => {
     store.referralsStore.fetchReferrals(filterState);
   }, [filterState]);
 
-  const referalCode =
-    'https://play.google.com/store/apps/details?id=ru.nsstms.prayersforafrica.app&referrer=' +
-      store.userStore.referalCode || '';
+  const referalCode = 'https://apps.apple.com/us/app/pray-online/id6748395896';
 
   const renderBackdrop = useCallback((props: BottomSheetBackdropProps) => {
     console.log({ props });

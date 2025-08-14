@@ -66,6 +66,7 @@ const Home = () => {
       return () => backHandler.remove();
     }, []),
   );
+  console.log(store.userStore.isUserBlessed, '----------==================');
 
   const blessedStatus = store.userStore.isUserBlessed
     ? t(T_KEYS.HOME_SCREEN_PASTOR_ALREADY_BLESSED)
@@ -119,6 +120,7 @@ const Home = () => {
       </View>
       <View style={styles.btnWrapper}>
         <CustomButton
+          style={store.userStore.isUserBlessed?styles.blessed:null}
           title={blessedStatus}
           onPress={() => {
             if (store.userStore.isUserBlessed) {
@@ -177,6 +179,10 @@ const styles = StyleSheet.create({
   },
   bottomMenuWrapper: {
     height: responsiveWidth(100),
+  },
+  blessed: {
+    backgroundColor: '#ba9a4aff',
+    borderWidth: 1,
   },
   freeModalWrapper: {
     display: 'flex',

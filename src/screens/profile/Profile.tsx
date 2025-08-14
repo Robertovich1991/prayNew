@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, StyleSheet, TouchableOpacity, Alert, Linking } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import TopBar from '../../components/TopBar';
@@ -22,6 +22,7 @@ import { WINDOW_WIDTH } from 'helpers/dimensions';
 import { version } from '../../../package.json';
 import { useTheme } from '@rneui/themed';
 import { CustomizationColors } from 'styles/customization';
+import { useTranslation } from 'react-i18next';
 
 type RootStackParamList = {
   [Routes.EDIT_PROFILE]: undefined;
@@ -42,7 +43,7 @@ const Profile = () => {
   const navigation = useNavigation<Props>();
   const { userName } = useCurrentUser();
   const { theme } = useTheme();
-  const t = useOwnTranslation;
+  const { t } = useTranslation(); // ✅ valid hook call in component body
 
   return (
     <Container>
@@ -159,6 +160,21 @@ const Profile = () => {
               height={responsiveWidth(14)}
             />
           </TouchableOpacity>
+           <TouchableOpacity
+            style={styles.list}
+            onPress={() => {
+              Linking.openURL('https://prayandbless.app/termsofuse/')
+            }}
+          >
+            <CustomText color={theme.colors.textColorSecondary}>
+              {t(T_KEYS.PROFILE_SCREEN_TERMS)}
+            </CustomText>
+            <ForwardArrow
+              color={theme.colors.textColorSecondary}
+              width={responsiveWidth(14)}
+              height={responsiveWidth(14)}
+            />
+          </TouchableOpacity>
 
           <TouchableOpacity
             style={styles.list}
@@ -209,12 +225,40 @@ const Profile = () => {
           </TouchableOpacity>
 
           <TouchableOpacity
+            style={styles.list}
             onPressIn={() => {
               store.userStore.signOut();
             }}
           >
             <CustomText color={CustomizationColors.get('RED_PRIMARY')}>
               {t(T_KEYS.PROFILE_SCREEN_LOG_OUT)}
+            </CustomText>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.list}
+            onPress={() => {
+              Alert.alert(
+                t(T_KEYS.PROFILE_SCREEN_DELETE_ACCOUNT), // title
+                "If you don't return within 3 months, we will delete your account permanently.",
+                [
+                  {
+                    text: t(T_KEYS.CANCEL) || 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: t(T_KEYS.SUBMIT) || 'Submit',
+                    style: 'destructive',
+                    onPress: () => {
+                      store.userStore.signOut();
+                    },
+                  },
+                ],
+                { cancelable: true },
+              );
+            }}
+          >
+            <CustomText color={theme.colors.textColorSecondary}>
+              {t(T_KEYS.PROFILE_SCREEN_DELETE_ACCOUNT)}
             </CustomText>
           </TouchableOpacity>
         </View>

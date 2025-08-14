@@ -46,7 +46,6 @@ class UserStore {
         callback => typeof callback === 'function' && callback(),
       );
       this.userInitCallbacks.clear();
-      console.log('User Inited', this.user);
       runInAction(() => {
         this.isUserInited = true;
       });
@@ -69,6 +68,8 @@ class UserStore {
   }
 
   get isUserBlessed() {
+    console.log(this.user,'ppppppppp99999999');
+////2025-08-09T09:44:22.304Z
     const expired = +new Date(this.user?.subscription?.expiredAt || 0);
     console.log('isUserBlessed', expired);
     return expired > Date.now();
@@ -92,7 +93,42 @@ class UserStore {
       successStatus: 201,
     });
 
-    console.log('signInWithGoogle result', token?.result);
+    console.log('signInWithGoogle result', token);
+    if (token?.result) {
+      const { accessToken, refreshToken, user, referalCode } = token.result;
+      runInAction(() => {
+        this.accessToken = accessToken;
+        this.accessTokenCreatedAt = Date.now();
+        this.refreshToken = refreshToken;
+        this.user = user;
+        this.userName = name;
+        this.referalCode = referalCode;
+      });
+      console.log(user,'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
+      
+      this.userAuthorizedHandler();
+      if (user?.isFirstRegistration) {
+        LogEvent('af_complete_registration', { af_complete_registration });
+      }
+      return accessToken;
+    }
+    if (token?.error) {
+      Alert.alert('An error in signInWithGoogle has occured: ', token?.error);
+    }
+    return null;
+  }
+
+  async signInWithApple(name: string, appleToken: string) {
+    try {
+       console.log('tokeeeeeeeeeeen', restApiRoutes.APPLE_SIGN_IN);
+    const token = await this._rootStore.restApi.request<BaseAuthSuccessResult>({
+      method: 'POST',
+      path: restApiRoutes.APPLE_SIGN_IN,
+      body: { name, appleToken },
+      successStatus: 201,
+    });
+
+    console.log('signInWithappljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjje result', token);
     if (token?.result) {
       const { accessToken, refreshToken, user, referalCode } = token.result;
       runInAction(() => {
@@ -113,6 +149,11 @@ class UserStore {
       Alert.alert('An error in signInWithGoogle has occured: ', token?.error);
     }
     return null;
+  
+    } catch (error) {
+      console.log(error,'MMMMMMMMMMMMmmmmmmmmmm');
+      
+    }
   }
 
   async signOut() {
@@ -131,11 +172,11 @@ class UserStore {
       webClientId: GOOGLE_PLAY_WEBCLIENT_ID,
       offlineAccess: true,
     });
-    if (await GoogleSignin.isSignedIn()) {
-      console.log('Sign out google');
-      await GoogleSignin.revokeAccess();
-      await GoogleSignin.signOut();
-    }
+    // if (await GoogleSignin.isSignedIn()) {
+    //   console.log('Sign out google');
+    //   await GoogleSignin.revokeAccess();
+    //   await GoogleSignin.signOut();
+    // }
     runInAction(() => {
       this.accessToken = null;
       this.accessTokenCreatedAt = 0;
@@ -164,6 +205,8 @@ class UserStore {
       });
     }
   }
+
+
 
   async getAccessToken() {
     runInAction(() => {
@@ -244,6 +287,24 @@ class UserStore {
     );
     this.userAuthorizedCallbacks.clear();
   }
+
+  updateUserSubscription(subscription: any) {
+    console.log(subscription,'666666667777-------------------00000000000');
+    
+  runInAction(() => {
+    if (this.user) {
+      this.user = {
+        ...this.user,
+        subscription,
+      };
+    } else {
+      // If no user yet, create a new one with just subscription data
+      this.user = { subscription } as UserResponse;
+    }
+  });
 }
+}
+
+
 
 export default UserStore;

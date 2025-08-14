@@ -1,0 +1,181 @@
+{
+  "appPolicies" : {
+    "eula" : "",
+    "policies" : [
+      {
+        "locale" : "en_US",
+        "policyText" : "",
+        "policyURL" : ""
+      }
+    ]
+  },
+  "identifier" : "F572ED94",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6748925032",
+      "localizations" : [
+        {
+          "description" : "donation Africa  prayers with 0.99$ amount",
+          "displayName" : "Donation Rate 1",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "donation_0_99",
+      "referenceName" : "Donation Rate 1",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "6749004727",
+      "localizations" : [
+        {
+          "description" : "a donation of approximately $2.99",
+          "displayName" : "Hign Donation",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "high_rate_donation_2_99",
+      "referenceName" : "Hign Donation",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "1.99",
+      "familyShareable" : false,
+      "internalID" : "6749334812",
+      "localizations" : [
+        {
+          "description" : "middle donation product",
+          "displayName" : "Middle Donation",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "middle_rate_donation_1_99",
+      "referenceName" : "Middle Donation",
+      "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6749334923",
+      "localizations" : [
+        {
+          "description" : "start donation product",
+          "displayName" : "Start Donation",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "start_rate_donation_0_99",
+      "referenceName" : "Start Donation",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_applicationInternalID" : "6748395896",
+    "_developerTeamID" : "9RBQZ3ZN9L",
+    "_failTransactionsEnabled" : false,
+    "_lastSynchronizedDate" : 775603649.95730305,
+    "_locale" : "en_US",
+    "_storefront" : "USA",
+    "_storeKitErrors" : [
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Load Products"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Purchase"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Verification"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Store Sync"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Subscription Status"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "App Transaction"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Manage Subscriptions Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Refund Request Sheet"
+      },
+      {
+        "current" : null,
+        "enabled" : false,
+        "name" : "Offer Code Redeem Sheet"
+      }
+    ]
+  },
+  "subscriptionGroups" : [
+    {
+      "id" : "21744411",
+      "localizations" : [
+
+      ],
+      "name" : "standart_subscription",
+      "subscriptions" : [
+        {
+          "adHocOffers" : [
+
+          ],
+          "codeOffers" : [
+
+          ],
+          "displayPrice" : "2.49",
+          "familyShareable" : false,
+          "groupNumber" : 1,
+          "internalID" : "6749323784",
+          "introductoryOffer" : {
+            "internalID" : "84FF093A",
+            "numberOfPeriods" : 1,
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P3D"
+          },
+          "localizations" : [
+            {
+              "description" : "standart for month",
+              "displayName" : "Standart subscription",
+              "locale" : "en_GB"
+            }
+          ],
+          "productID" : "standard_sub_1_month",
+          "recurringSubscriptionPeriod" : "P1M",
+          "referenceName" : "Subscription For 1 Month",
+          "subscriptionGroupID" : "21744411",
+          "type" : "RecurringSubscription",
+          "winbackOffers" : [
+
+          ]
+        }
+      ]
+    }
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}

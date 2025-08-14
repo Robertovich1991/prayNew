@@ -18,6 +18,7 @@ export const EN_TRANSLATIONS: Translations = {
   [T_KEYS.SETTINGS_SCREEN_SOUND_ACTIVE]: 'Enabled',
   [T_KEYS.YOUR_NAME]: 'YOUR NAME',
   [T_KEYS.CONTINUE_WITH_GOOGLE]: 'Continue with Google',
+  [T_KEYS.CANCEL]:'Cancel',
   [T_KEYS.CONTINUE_WITH_APPLE]: 'Continue with Apple',
   [T_KEYS.IN_HOUSE_OF_PRAYERS]: 'You are in house of prayers',
   [T_KEYS.HOME_SCREEN_TITLE]: 'Pray',
@@ -45,9 +46,12 @@ export const EN_TRANSLATIONS: Translations = {
   [T_KEYS.PROFILE_SCREEN_SUBSCRIPTION]: 'Subscription',
   [T_KEYS.PROFILE_SCREEN_JOIN]: 'Join our community',
   [T_KEYS.PROFILE_SCREEN_POLICY]: 'Privacy policy',
+  [T_KEYS.PROFILE_SCREEN_TERMS]:'Terms of use',
   [T_KEYS.PROFILE_SCREEN_AVOID_SERVICE]: 'Avoid Service',
   [T_KEYS.PROFILE_SCREEN_SETTINGS]: 'Settings',
   [T_KEYS.PROFILE_SCREEN_LOG_OUT]: 'Log out',
+  [T_KEYS.DELETE_ACCOUNT_WARNING]:'If you don\'t return within 3 months, we will delete your account permanently.',
+  [T_KEYS.PROFILE_SCREEN_DELETE_ACCOUNT]:'Delete account',
   [T_KEYS.DONATIONS_SCREEN_PLAYFAIR]: 'Support our\nmission',
   [T_KEYS.DONATIONS_SCREEN_TEXT]:
     'You can support our mission and make a one-time donation.',
@@ -64,6 +68,7 @@ export const EN_TRANSLATIONS: Translations = {
   [T_KEYS.NOT_BLESSED_CARD_CHOSE]: 'CHOOSE TO BE BLESSED',
   [T_KEYS.EDIT_PROFILE_TITLE]: 'Edit profile',
   [T_KEYS.SAVE_BUTTON]: 'SAVE',
+  [T_KEYS.SUBMIT]:'Submit',
   [T_KEYS.CHANGES_SAVED_CARD_PLAYFAIR]: 'Changes\nsaved',
   [T_KEYS.JOIN_COMMUNITY_SCREEN_SEND]: 'SEND MAIL',
   [T_KEYS.RENEW_SUB_CARD_PLAYFAIR]: 'Your\nsubscription\nis expired',
@@ -173,7 +178,7 @@ export const EN_TRANSLATIONS: Translations = {
   [T_KEYS.INVITE_MORE_REFERRALS_TO_GET_FREE_SUBSCRIPTION]:
     'Invite %%REFERRAL_COUNTER%% more referrals to get a free subscription',
   [T_KEYS.YOUR_NEXT_SUBSCRIPTION_WILL_BE_FREE]:
-    'Your next subscription will be free (valid until %%DATE%%)',
+    'Your next subscription will be free (valid until 1 year after subscription)',
   [T_KEYS.COPIED_TO_CLIPBOARD]: 'Copied to clipboard',
   [T_KEYS.SHARE_BUTTON_TITLE]: 'SHARE',
   [T_KEYS.PAY_SUBSCRIPTION]: 'Pay subscription',

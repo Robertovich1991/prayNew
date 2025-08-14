@@ -43,6 +43,7 @@ const RenewSubCard = (props: IRenewSubCardProps) => {
 
     return periodPhrase;
   };
+console.log(currentSub,'//ppppokkkkkkkkkjnnnnnnnn',googleSub,'.......');
 
   const price = () => {
     if (!googleSub) {
@@ -50,8 +51,8 @@ const RenewSubCard = (props: IRenewSubCardProps) => {
     }
 
     return (
-      googleSub.subscriptionOfferDetails[0]?.pricingPhases.pricingPhaseList[0]
-        ?.formattedPrice || currentSub.price
+     // googleSub?.subscriptionOfferDetails[0]?.pricingPhases.pricingPhaseList[0]
+       googleSub ?.localizedPrice || currentSub.price
     );
   };
 

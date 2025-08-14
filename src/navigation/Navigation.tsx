@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { StatusBar, StatusBarStyle } from 'react-native';
+import { StatusBar, StatusBarStyle, TouchableOpacity } from 'react-native';
 import { useThemeMode } from '@rneui/themed';
 import NotAuthorizedStack from './NotAuthorizedStack';
 import RootStack from './RootStack';
@@ -13,6 +13,8 @@ import { navigationRef } from './RefNavigation';
 import Container from 'components/Container';
 import SelectLanguage from '../screens/SelectLanguage';
 import MusicalAccompaniment from 'screens/MusicalAccompaniment';
+import * as RNIap from 'react-native-iap';
+
 
 const theme = {
   ...DefaultTheme,
@@ -26,6 +28,36 @@ const Navigation = () => {
   const { isUserAuth, isUserInited, isUserInAuthorization } = useCurrentUser();
   const { settings, settingsInited } = useCurrentSettings();
   const { setMode: setThemeMode, mode: themeMode } = useThemeMode();
+
+
+
+
+  const productIds = ['123','high_rate_donation_2_99',];
+  
+  useEffect(() => {
+    async function init() {
+      try {
+        await RNIap.initConnection();
+        setTimeout(async () => {
+          const products = await RNIap.getSubscriptions({skus:productIds});
+          const productsjjjjj = await RNIap.getProducts({skus:productIds});
+
+         console.log('PRODU---------------------------------CTS:',productsjjjjj, products);
+        }, 1000); // Wait 1 second        console.log(products,'[[[[[[[[gggggggggggggggggg[[[[[[[[[[[[[[')
+      } catch (err) {
+        console.log(err);
+      }
+    }
+  
+    init();
+  
+    return () => {
+      RNIap.endConnection();
+    };
+  }, []);
+
+
+
 console.log(isUserAuth,'..............................................................mmm');
 
   useEffect(() => {
@@ -47,12 +79,16 @@ console.log(isUserAuth,'........................................................
   const navigationWrapper = React.useMemo(() => {
     console.log('========================');
     
-    if (settings?.theme && themeMode !== settings.theme) {
-      setTimeout(() => {
-        setThemeMode(settings.theme);
-      }, 0);
-    }
+  useEffect(() => {
+  if (!settings?.theme && themeMode !== 'light') {
+    setThemeMode('light'); // default light
+  } else if (settings?.theme && themeMode !== settings.theme) {
+    setThemeMode(settings.theme);
+  }
+}, [settings?.theme, themeMode, setThemeMode]);
 console.log('[[[[[[[[[[[[[[[[[');
+
+
 
     if (isUserAuth) {
       if (!settingsInited) {
@@ -111,6 +147,7 @@ console.log('pppppppppppppppppppppppp');
           barStyle={barStyle}
         />
         {navigationWrapper}
+        {/* <TouchableOpacity style={{width:200,height:50, backgroundColor:'red'}}></TouchableOpacity> */}
       </NavigationContainer>
     </>
   );

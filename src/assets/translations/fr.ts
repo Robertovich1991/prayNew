@@ -23,6 +23,8 @@ export const FR_TRANSLATIONS: Translations = {
   [T_KEYS.BOTTOM_MENU_PASTORS]: 'Pasteurs',
   [T_KEYS.BOTTOM_MENU_ARTICLES]: 'Articles',
   [T_KEYS.BOTTOM_MENU_DONATIONS]: 'Dons',
+  [T_KEYS.CANCEL]:'Annuler',
+  
   [T_KEYS.PRAYERS_SCREEN_TITLE]: 'Prières',
   [T_KEYS.PASTORS_SCREEN_TITLE]: 'Pasteurs',
   [T_KEYS.ARTICLES_SCREEN_TITLE]: 'Articles',
@@ -41,8 +43,11 @@ export const FR_TRANSLATIONS: Translations = {
   [T_KEYS.PROFILE_SCREEN_SUBSCRIPTION]: 'Abonnement',
   [T_KEYS.PROFILE_SCREEN_JOIN]: 'Rejoignez notre communauté',
   [T_KEYS.PROFILE_SCREEN_POLICY]: 'Politique de confidentialité',
+  [T_KEYS.PROFILE_SCREEN_TERMS]:'Conditions dutilisations',
   [T_KEYS.PROFILE_SCREEN_SETTINGS]: 'Paramètres',
   [T_KEYS.PROFILE_SCREEN_LOG_OUT]: 'Se déconnecter',
+  [T_KEYS.DELETE_ACCOUNT_WARNING]:'Si vous ne revenez pas dans les 3 mois, nous supprimerons définitivement votre compte.',
+  [T_KEYS.PROFILE_SCREEN_DELETE_ACCOUNT]:'Supprimer le compte',
   [T_KEYS.DONATIONS_SCREEN_PLAYFAIR]: 'Soutenir\nnotre mission',
   [T_KEYS.DONATIONS_SCREEN_TEXT]:
     'Vous pouvez soutenir notre mission et faire un don.',
@@ -59,6 +64,7 @@ export const FR_TRANSLATIONS: Translations = {
   [T_KEYS.NOT_BLESSED_CARD_CHOSE]: "Choisir d'être béni",
   [T_KEYS.EDIT_PROFILE_TITLE]: 'Modifier le profil',
   [T_KEYS.SAVE_BUTTON]: 'ENREGISTRER',
+  [T_KEYS.SUBMIT]:'Soumettre',
   [T_KEYS.CHANGES_SAVED_CARD_PLAYFAIR]: 'Enregistrer les modifications',
   [T_KEYS.JOIN_COMMUNITY_SCREEN_SEND]: 'Envoyer le mail',
   [T_KEYS.RENEW_SUB_CARD_PLAYFAIR]: 'Votre abonnement a expiré',

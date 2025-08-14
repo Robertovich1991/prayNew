@@ -78,6 +78,7 @@ type Donation = {
   amount: number;
   isActive?: boolean;
   googleSku: string;
+  appleSku:string
   history?: any | {};
   createdAt: Date;
   updatedAt?: Date;

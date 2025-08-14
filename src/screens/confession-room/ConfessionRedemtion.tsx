@@ -64,6 +64,7 @@ const ConfessionRedemption = () => {
       </View>
       <Divider height={12} />
       <CustomText
+      style={{backgroundColor:'rgba(0, 0, 0, 0.7)',padding:5}}
         fontSize={responsiveWidth(15)}
         lineHeight={responsiveWidth(22)}
         color="#FFF"
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     fontFamily: 'PlayfairDisplay-SemiBold',
   },
   elementRowWrapper: {
-    backgroundColor: 'black',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     borderRadius: responsiveWidth(12),
     padding: responsiveWidth(12),
   },

@@ -19,9 +19,13 @@ import store from 'store';
 import { T_KEYS } from 'assets/translations';
 import useOwnTranslation from 'hooks/useOwnTranslation';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native';
-import { GOOGLE_PLAY_WEBCLIENT_ID } from 'constants/AppConfig';
+import {
+  GOOGLE_PLAY_IOS_ID,
+  GOOGLE_PLAY_WEBCLIENT_ID,
+} from 'constants/AppConfig';
 import { useTheme } from '@rneui/themed';
 import { CustomizationColors } from 'styles/customization';
+import appleAuth from '@invertase/react-native-apple-authentication';
 
 const AuthScreen = () => {
   const [name, setName] = useState('');
@@ -29,6 +33,43 @@ const AuthScreen = () => {
 
   const t = useOwnTranslation;
   const { theme } = useTheme();
+
+  const onAppleButtonPress = async () => {
+    console.log('oooo');
+    try {
+      const appleAuthRequestResponse = await appleAuth.performRequest({
+        requestedOperation: appleAuth.Operation.LOGIN,
+        // Note: it appears putting FULL_NAME first is important, see issue #293
+        requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
+      });
+    
+
+      // get current authentication state for user
+      // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
+      const credentialState = await appleAuth.getCredentialStateForUser(
+        appleAuthRequestResponse.user,
+      );
+      if (!appleAuthRequestResponse.identityToken) {
+        Alert.alert(
+          'Authorization Error',
+          'Error while processing idToken in Google',
+        );
+        // store.modalsStore.hideSpinner();
+      } else {
+        store.userStore.signInWithApple(
+          name,
+          appleAuthRequestResponse.identityToken,
+        );
+      }
+      // use credentialState response to ensure the user is authenticated
+      if (credentialState === appleAuth.State.AUTHORIZED) {
+        // user is authenticated
+      }
+    } catch (error) {
+      console.log(error, 'ppppppp9999999');
+    }
+  };
+
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <Container>
@@ -60,6 +101,16 @@ const AuthScreen = () => {
             />
             <View style={styles.btnWrapper}>
               <AuthButton
+                              disabled={!activeGoogle}
+
+                onPress={onAppleButtonPress}
+                backgroundColor={theme.colors.buttonTertiary}
+                height={responsiveWidth(60)}
+                appleSvg
+                title={t(T_KEYS.CONTINUE_WITH_APPLE)}
+                style={styles.btnStyle}
+              />
+              <AuthButton
                 disabled={!activeGoogle}
                 backgroundColor={theme.colors.buttonTertiary}
                 height={responsiveWidth(60)}
@@ -67,25 +118,30 @@ const AuthScreen = () => {
                 googleSvg
                 title={t(T_KEYS.CONTINUE_WITH_GOOGLE)}
                 onPress={async () => {
+                  console.log('jjjjjjjjj');
+
                   // setActiveGoogle(true)
                   GoogleSignin.configure({
                     webClientId: GOOGLE_PLAY_WEBCLIENT_ID,
                     // scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+                    iosClientId: GOOGLE_PLAY_IOS_ID,
                     offlineAccess: true,
                   });
+                  console.log('ppppppppp');
 
-                  if (await GoogleSignin.isSignedIn()) {
-                    console.log('Sign out google');
-                    await GoogleSignin.revokeAccess();
-                    await GoogleSignin.signOut();
-                  }
+                  // if (await GoogleSignin.isSignedIn()) {
+                  //   console.log('Sign out google');
+                  //   await GoogleSignin.revokeAccess();
+                  //   await GoogleSignin.signOut();
+                  // }
 
                   try {
                     console.log('start google signin');
                     await GoogleSignin.hasPlayServices();
 
-                    const { idToken } = await GoogleSignin.signIn();
-                    console.log('idToken', idToken);
+                    const userInfo = await GoogleSignin.signIn();
+                    const idToken =
+                      userInfo?.idToken || userInfo?.data?.idToken;
 
                     if (!idToken) {
                       Alert.alert(
@@ -132,6 +188,7 @@ const styles = StyleSheet.create({
   },
   btnStyle: {
     flexDirection: 'row',
+    marginBottom: 16,
   },
   btnTextStyle: {
     color: CustomizationColors.get('GREY_SECONDARY'),

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useEffect, useState } from 'react';
-import { View, StyleSheet, Image, FlatList } from 'react-native';
+import { View, StyleSheet, Image, FlatList, Alert } from 'react-native';
 import { responsiveWidth } from '../../common/utils';
 import CustomButton from '../../components/CustomButton';
 import CustomLine from '../../components/CustomLine';
@@ -17,11 +17,12 @@ import store from 'store';
 import { observer } from 'mobx-react';
 import { useFocusEffect } from '@react-navigation/native';
 import SimpleModal from 'screens/modals/SimpleModal';
-// import { Product } from 'react-native-iap';
+ import { getReceiptIOS, Product } from 'react-native-iap';
 import ThanksModal from 'screens/modals/ThanksModal';
 import { LogEvent, af_donation_started } from 'helpers/logEvents';
 import { useTheme } from '@rneui/themed';
 import { CustomizationColors } from 'styles/customization';
+import { PurchaseError, requestSubscription } from 'react-native-iap';
 
 const Donations = () => {
   const [selectedDonation, setSelectedDonation] = useState(0);
@@ -43,7 +44,7 @@ const Donations = () => {
     const donationsRaw = await store.donationsStore.fetchDonations();
     if (!donationsRaw) {
       return;
-    }
+    }    
     await store.purchaseStore.initRNIap();
     // Here we can receive Localized Price for products
     const donationsSKUs = donationsRaw?.map(x => x.googleSku);
@@ -51,7 +52,7 @@ const Donations = () => {
       const activeDonations = await store.purchaseStore.getActiveProducts(
         donationsSKUs,
       );
-      if (activeDonations && activeDonations.length > 0) {
+      if (activeDonations && activeDonations.length > 0) {        
         setDonationsList(
           donationsRaw.map(donat => {
             const googleDonation = activeDonations.find(
@@ -126,6 +127,35 @@ const Donations = () => {
       }
     });
 
+    const handleBuyProducts = async (productId: string) => {
+  console.log(productId, '>>>>>><<<<<<<<<<<<<<<<<99999999999999999');
+
+  try {
+    const skus = await requestSubscription({
+      sku: productId,
+    });
+
+    console.log(skus, '------000000000099999iiiiiiii----');
+        console.log( '------000000000099999iiiiiiii----');
+      const result = await store.donationsStore.sendTransaction(skus);
+console.log(result,'-----++++++++++============+++++++ppppppp+++++++++++++++++');
+
+  } catch (error) {
+    if (error instanceof PurchaseError) {
+      console.log({ message: `[${error.code}]: ${error.message}`, error });
+    } else {
+      Alert.alert(
+        'Purchase error',
+        'Try again later',
+        [{ text: 'OK' }],
+      );
+      console.log(error,'//////////.......................................');
+      
+    }
+  }
+};
+    
+
   return (
     <View
       style={{
@@ -163,11 +193,13 @@ const Donations = () => {
         <FlatList
           data={donationsList}
           renderItem={({ item, index }) => (
+            console.log(item,'00000000099999-----------------------------'),
+            
             <View key={index} style={styles.btnWrapper}>
               <CustomButton
                 backgroundColor={theme.colors.buttonTertiary}
                 btnTextStyle={
-                  selectedDonation === item.id
+                  selectedDonation === item.googleSku
                     ? {
                         ...styles.activeDollars,
                         color: theme.colors.textColorPrimary,
@@ -177,36 +209,38 @@ const Donations = () => {
                         color: CustomizationColors.get('GREY_SECONDARY'),
                       }
                 }
+               // onPress={()=>handleBuyProducts(item?.googleDonation?.productId)}
                 onPress={() => {
-                  setSelectedDonation(item.id);
+                  setSelectedDonation(item.googleSku);
                   console.log('donation btn: $', item.amount);
                 }}
-                title={`${item.googleDonation?.localizedPrice || item.amount}`}
+                title={`Donate for $${ item.amount}`}
               />
             </View>
           )}
         />
         <View style={styles.donateBtnWrapepr}>
           <CustomButton
-            onPress={async () => {
-              setSelectedDonation(0);
-              LogEvent('af_donation_started', { af_donation_started });
-              try {
-                const donation = await performDonationsWithModals();
-                if (donation) {
-                  const result = await purchaseWithModals(donation);
-                  if (!result) {
-                    store.modalStore.open(
-                      <SimpleModal
-                        title={'ERROR IN PURCHASE FINAL PROCESS}'}
-                      />,
-                    );
-                  }
-                }
-              } catch (e) {
-                console.log('We have an error', e);
-              }
-            }}
+          onPress={()=>handleBuyProducts(selectedDonation)}
+            // onPress={async () => {
+            //   setSelectedDonation(0);
+            //   LogEvent('af_donation_started', { af_donation_started });
+            //   try {
+            //     const donation = await performDonationsWithModals();
+            //     if (donation) {
+            //       const result = await purchaseWithModals(donation);
+            //       if (!result) {
+            //         store.modalStore.open(
+            //           <SimpleModal
+            //             title={'ERROR IN PURCHASE FINAL PROCESS}'}
+            //           />,
+            //         );
+            //       }
+            //     }
+            //   } catch (e) {
+            //     console.log('We have an error', e);
+            //   }
+            // }}
             title={t(T_KEYS.DONATIONS_SCREEN_DONATE)}
             disabled={selectedDonation === 0}
           />
