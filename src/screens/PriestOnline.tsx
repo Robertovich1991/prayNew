@@ -163,7 +163,8 @@ const PriestOnline = () => {
                     }
                     if (prayerRequestText?.length > 0) {
                       setPrayerRequestText('');
-                      console.log('My message:', prayerRequestText);
+                      console.log('llll');
+                      
                       store.chatStore.sendNewMessage(prayerRequestText);
                       // flatListRef.current?.scrollToOffset({ offset: 0, animated: true })
                     }

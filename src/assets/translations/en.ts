@@ -54,7 +54,7 @@ export const EN_TRANSLATIONS: Translations = {
   [T_KEYS.PROFILE_SCREEN_DELETE_ACCOUNT]:'Delete account',
   [T_KEYS.DONATIONS_SCREEN_PLAYFAIR]: 'Support our\nmission',
   [T_KEYS.DONATIONS_SCREEN_TEXT]:
-    'You can support our mission and make a one-time donation.',
+    '"All donations you make go toward the development and improvement of the Pray Online app. Thanks to your support, we can create new opportunities for prayer, spiritual growth, and connecting people around the world.".',
   [T_KEYS.DONATIONS_SCREEN_DONATE]: 'DONATE',
   [T_KEYS.DONATION_CARD_PLAYFAIR]: 'Thanks for\nyour support',
   [T_KEYS.DONATION_CARD_ITALIC]:

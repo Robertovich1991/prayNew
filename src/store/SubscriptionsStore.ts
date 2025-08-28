@@ -99,10 +99,10 @@ class SubscriptionsStore {
             ...this._rootStore.userStore.user,
             subscription,
           };
-          LogEvent('af_paid_subscription_completed', {
-            af_revenue: subscription.price,
-            af_currency: 'USD',
-          });
+          // LogEvent('af_paid_subscription_completed', {
+          //   af_revenue: subscription.price,
+          //   af_currency: 'USD',
+          // });
           if (this._rootStore.userStore.isUserNew) {
             this._rootStore.userStore.user = {
               ...this._rootStore.userStore.user,

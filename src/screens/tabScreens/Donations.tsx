@@ -29,6 +29,7 @@ const Donations = () => {
   const [donationsList, setDonationsList] = useState<Donation[]>([]);
   const { theme } = useTheme();
   const t = useOwnTranslation;
+console.log(donationsList,'PPP_-------------');
 
   useFocusEffect(
     useCallback(() => {
@@ -192,9 +193,7 @@ console.log(result,'-----++++++++++============+++++++ppppppp+++++++++++++++++')
         </CustomText>
         <FlatList
           data={donationsList}
-          renderItem={({ item, index }) => (
-            console.log(item,'00000000099999-----------------------------'),
-            
+          renderItem={({ item, index }) => (            
             <View key={index} style={styles.btnWrapper}>
               <CustomButton
                 backgroundColor={theme.colors.buttonTertiary}

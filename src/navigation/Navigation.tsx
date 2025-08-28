@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import * as React from 'react';
 import { observer } from 'mobx-react';
-import { StatusBar, StatusBarStyle, TouchableOpacity } from 'react-native';
+import { StatusBar, StatusBarStyle, TouchableOpacity, View } from 'react-native';
 import { useThemeMode } from '@rneui/themed';
 import NotAuthorizedStack from './NotAuthorizedStack';
 import RootStack from './RootStack';
@@ -39,10 +39,8 @@ const Navigation = () => {
       try {
         await RNIap.initConnection();
         setTimeout(async () => {
-          const products = await RNIap.getSubscriptions({skus:productIds});
-          const productsjjjjj = await RNIap.getProducts({skus:productIds});
-
-         console.log('PRODU---------------------------------CTS:',productsjjjjj, products);
+          await RNIap.getSubscriptions({skus:productIds});
+          await RNIap.getProducts({skus:productIds});
         }, 1000); // Wait 1 second        console.log(products,'[[[[[[[[gggggggggggggggggg[[[[[[[[[[[[[[')
       } catch (err) {
         console.log(err);
@@ -76,20 +74,16 @@ console.log(isUserAuth,'........................................................
     isUserInAuthorization,
   ]);
 
-  const navigationWrapper = React.useMemo(() => {
-    console.log('========================');
-    
-  useEffect(() => {
+    useEffect(() => {
   if (!settings?.theme && themeMode !== 'light') {
     setThemeMode('light'); // default light
   } else if (settings?.theme && themeMode !== settings.theme) {
     setThemeMode(settings.theme);
   }
 }, [settings?.theme, themeMode, setThemeMode]);
-console.log('[[[[[[[[[[[[[[[[[');
 
-
-
+  const navigationWrapper = React.useMemo(() => {
+  
     if (isUserAuth) {
       if (!settingsInited) {
         return (

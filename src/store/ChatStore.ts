@@ -170,6 +170,7 @@ class ChatStore {
       },
       successStatus: 201,
     });
+console.log(res?.result?.message,'----0000ooooooooooooooorhh');
 
     if (res?.result?.message) {
       const chat = this.listChats.find(x => x.id === res.result?.chat.id);

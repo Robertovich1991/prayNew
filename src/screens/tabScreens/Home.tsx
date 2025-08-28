@@ -19,6 +19,7 @@ import NotBlessedCardModal from 'screens/modals/NotBlessedCardModal';
 import { CustomizationColors } from 'styles/customization';
 import { useTheme } from '@rneui/themed';
 import RenewSubModal from 'screens/modals/RenewSubModal';
+import ErrorModal from 'screens/modals/ErrorModal';
 
 type RootStackParamList = {
   [Routes.TARIF_SCREEN]: undefined;
@@ -112,6 +113,7 @@ const Home = () => {
         backgroundColor: theme.colors.backgroundPrimary,
       }}
     >
+     
       <View style={styles.topBar}>
         <TopBar text={t(T_KEYS.HOME_SCREEN_TITLE)} />
       </View>

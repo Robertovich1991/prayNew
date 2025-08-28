@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableWithoutFeedback, Pressable } from 'react-native';
 import CustomButton from '../CustomButton';
 import { responsiveWidth } from '../../common/utils';
 import CustomLine from '../CustomLine';
@@ -23,7 +23,9 @@ const AboutCard = (props: IAboutCardProps) => {
   const { theme } = useTheme();
   return (
     <CardContainer>
-      <View
+      <Pressable onPress={() => {
+              props.continueAction();
+            }}
         style={{
           ...styles.card,
           backgroundColor: theme.colors.blackPrimaryToWhite,
@@ -84,7 +86,7 @@ const AboutCard = (props: IAboutCardProps) => {
             title={t(T_KEYS.CONTINUE_BUTTON)}
           />
         </View>
-      </View>
+      </Pressable>
     </CardContainer>
   );
 };

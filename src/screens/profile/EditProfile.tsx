@@ -10,16 +10,17 @@ import Container from '../../components/Container';
 import store from 'store';
 import { useNavigation } from '@react-navigation/native';
 import { T_KEYS } from 'assets/translations';
-import useOwnTranslation from 'hooks/useOwnTranslation';
 import { TouchableWithoutFeedback } from 'react-native';
 import ChangeSavedModal from 'screens/modals/ChangeSavedModal';
 import { useTheme } from '@rneui/themed';
+import useOwnTranslation from 'hooks/useOwnTranslation';
+import { useTranslation } from 'react-i18next';
 
 const EditProfile = () => {
   const navigation = useNavigation();
   const [editableName, setEditableName] = useState(store.userStore.userName);
   const { theme } = useTheme();
-  const t = useOwnTranslation;
+  const {t} = useTranslation()
 
   const showChangeSavedModal = () => {
     store.modalStore.open(
@@ -30,7 +31,12 @@ const EditProfile = () => {
       />,
     );
   };
-
+const esim =() => {
+                Keyboard.dismiss();
+                showChangeSavedModal();
+                store.userStore.setCurrentUserName(editableName);
+              }
+  console.log('render Edit Profile')
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -53,11 +59,7 @@ const EditProfile = () => {
           />
           <View style={styles.btnWrapper}>
             <CustomButton
-              onPress={() => {
-                Keyboard.dismiss();
-                showChangeSavedModal();
-                store.userStore.setCurrentUserName(editableName);
-              }}
+              onPress={esim}
               title={t(T_KEYS.SAVE_BUTTON)}
             />
           </View>

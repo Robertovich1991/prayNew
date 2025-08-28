@@ -64,7 +64,7 @@ const ConfessionRedemption = () => {
       </View>
       <Divider height={12} />
       <CustomText
-      style={{backgroundColor:'rgba(0, 0, 0, 0.7)',padding:5}}
+      style={{backgroundColor:'rgba(0, 0, 0, 0.5)',padding:5,borderRadius:5}}
         fontSize={responsiveWidth(15)}
         lineHeight={responsiveWidth(22)}
         color="#FFF"
@@ -79,10 +79,10 @@ const ConfessionRedemption = () => {
       <Divider height={8} />
       {/* <View style={styles.redeemingSuperstition} />
       <Divider height={8} /> */}
-      <AdditionalVideo
+      {/* <AdditionalVideo
         videoUrl={sinElement.additionalVideo?.url}
         videoPreview={sinElement.additionalVideo?.preview}
-      />
+      /> */}
       <Divider height={8} />
       <AdditionalLinks links={sinElement.additionalLinks} />
       <Divider height={responsiveWidth(120)} />

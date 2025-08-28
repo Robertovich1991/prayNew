@@ -2,7 +2,7 @@
 import { responsiveWidth } from 'common/utils';
 import React from 'react';
 import { View, StyleSheet, Image, ImageBackground } from 'react-native';
- import { Pagination } from 'react-native-snap-carousel';
+import { Pagination } from 'react-native-snap-carousel';
 import AnimatedCross from './AnimatedCross';
 import CustomText from './CustomText';
 import PlayfairTitle from './PlayfairTitle';
@@ -61,6 +61,13 @@ const OnboardingItem = (props: IOnboardingItemProps) => {
                 navigation.navigate(Routes.AUTH_SCREEN);
               }}
               title={'Log In'}
+            />
+            <CustomButton
+              backgroundColor={CustomizationColors.get('GREY_PRIMIARY')}
+              onPress={() => {
+                navigation.navigate(Routes.FREE_DONATIONS);
+              }}
+              title={'Donate'}
             />
           </View>
         </View>
@@ -183,7 +190,7 @@ const styles = StyleSheet.create({
   paginationWrapper: {
     justifyContent: 'center',
     position: 'absolute',
-    bottom: responsiveWidth(139),
+    bottom: responsiveWidth(179),
     width: '100%',
   },
   featuresTitle: {

@@ -83,7 +83,6 @@ const CarouselItem = (props: { item: Subscription; index: number }) => {
   const googleSub = store.purchaseStore.availableSubscriptions.find(
     x => x.productId === item.googleSku,
   );
- 
 
   const currencyPerPeriod = () => {
     if (!googleSub) {
@@ -104,17 +103,13 @@ const CarouselItem = (props: { item: Subscription; index: number }) => {
   };
 
   const makeSubscription = async () => {
-   
-    console.log('9999999999999',item);
-   const skus=  await requestSubscription({
-        sku: 'standard_sub_1_month',
-       // appAccountToken: appAccountToken?.appAccountToken,
-      });
-      console.log(skus,'====+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
-      
+    const skus = await requestSubscription({
+      sku: 'standard_sub_1_month',
+      // appAccountToken: appAccountToken?.appAccountToken,
+    });
     const result = await store.donationsStore.sendTransactionSub(skus);
-navigation.goBack()
-    LogEvent('af_paid_subscription_started', { af_paid_subscription_started });
+    navigation.goBack();
+    // LogEvent('af_paid_subscription_started', { af_paid_subscription_started });
     // try {
     //   store.modalStore.showSpinner('makeSubscription');
     //   const sub = await store.subscriptionsStore.subscribe(item.id);
@@ -176,8 +171,8 @@ navigation.goBack()
           try {
             store.modalStore.showSpinner('handleUnsubscribe');
             const res = await store.subscriptionsStore.unsubscribe();
-            console.log(res,'............----------,,............');
-            
+            console.log(res, '............----------,,............');
+
             if (res?.result) {
               LogEvent('af_unsubscribe', { af_unsubscribe });
               navigation.goBack();
@@ -202,7 +197,7 @@ navigation.goBack()
         },
       },
     ]);
- };
+  };
 
   return (
     <SafeAreaView

@@ -39,6 +39,7 @@ const TopBar = (props: ITopBarProps) => {
     <View>
       <View style={styles.wrapper}>
         <TouchableOpacity
+        style={{paddingRight:25,paddingBottom:10}}
           onPress={async () => {
             if (props.backArrow) {
               Keyboard.dismiss();
@@ -56,7 +57,8 @@ const TopBar = (props: ITopBarProps) => {
           }}
         >
           {props.backArrow ? (
-            <BackArrow
+            <BackArrow  
+            
               color={props.backArrowColor || theme.colors.textColorPrimary}
               width={responsiveWidth(20)}
               height={responsiveWidth(20)}
@@ -77,6 +79,7 @@ const TopBar = (props: ITopBarProps) => {
           {props.text}
         </CustomText>
         <TouchableOpacity
+        style={{paddingLeft:25,paddingBottom:10}}
           onPress={() => {
             navigation.navigate(Routes.PROFILE_SCREEN);
           }}

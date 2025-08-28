@@ -56,8 +56,9 @@ const AuthScreen = () => {
         );
         // store.modalsStore.hideSpinner();
       } else {
+        const firstName=name?name:"Prayer"
         store.userStore.signInWithApple(
-          name,
+          firstName,
           appleAuthRequestResponse.identityToken,
         );
       }
@@ -101,7 +102,6 @@ const AuthScreen = () => {
             />
             <View style={styles.btnWrapper}>
               <AuthButton
-                              disabled={!activeGoogle}
 
                 onPress={onAppleButtonPress}
                 backgroundColor={theme.colors.buttonTertiary}

@@ -50,7 +50,7 @@ export const FR_TRANSLATIONS: Translations = {
   [T_KEYS.PROFILE_SCREEN_DELETE_ACCOUNT]:'Supprimer le compte',
   [T_KEYS.DONATIONS_SCREEN_PLAYFAIR]: 'Soutenir\nnotre mission',
   [T_KEYS.DONATIONS_SCREEN_TEXT]:
-    'Vous pouvez soutenir notre mission et faire un don.',
+    'Tous les dons que vous effectuez sont destinés au développement et à l’amélioration de l’application Pray Online. Grâce à votre soutien, nous pouvons créer de nouvelles opportunités pour la prière, la croissance spirituelle et le rapprochement des personnes dans le monde entier. ',
   [T_KEYS.DONATIONS_SCREEN_DONATE]: 'FAIRE UN DON',
   [T_KEYS.DONATION_CARD_PLAYFAIR]: 'Merci pour\nvotre soutien',
   [T_KEYS.DONATION_CARD_ITALIC]:

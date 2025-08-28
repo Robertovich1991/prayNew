@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
   fullContainer: {
     width: WINDOW_WIDTH,
     height: SCREEN_HEIGHT,
+    paddingTop:40
   },
   content: {
     paddingHorizontal: responsiveWidth(20),

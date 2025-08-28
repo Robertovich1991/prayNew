@@ -213,6 +213,7 @@ async sendTransactionSub(data: { transactionId: string }) {
         productId:data.productId,
         receiptData:data.transactionReceipt
     }
+console.log(body,url,'============================pplollllllllllll');
 
     // Set headers, including authorization token if needed
     const headers = {

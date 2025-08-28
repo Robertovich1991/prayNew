@@ -14,7 +14,7 @@ const { width } = Dimensions.get('window');
 
 const OnboardingSlider = () => {
   const onboardingItems = [
-    { title: 'Prayers for\nAfrica', noWidget: true },
+    { title: 'Pray online', noWidget: true },
     {
       title: 'Subscription\nbenefits',
       bgSrc: Background2,

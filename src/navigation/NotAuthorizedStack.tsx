@@ -3,6 +3,7 @@ import * as React from 'react';
 import AuthScreen from 'screens/AuthScreen';
 import Onboarding from 'screens/Onboarding';
 import Routes from './Routes';
+import FreeDonation from 'screens/FreeDonation';
 
 const NotAuthorizedStack = createStackNavigator();
 
@@ -17,6 +18,10 @@ export default () => {
         <NotAuthorizedStack.Screen
           name={Routes.ONBOARDING}
           component={Onboarding}
+        />
+        <NotAuthorizedStack.Screen
+          name={Routes.FREE_DONATIONS}
+          component={FreeDonation}
         />
         <NotAuthorizedStack.Screen
           name={Routes.AUTH_SCREEN}

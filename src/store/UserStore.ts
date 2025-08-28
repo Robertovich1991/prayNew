@@ -104,7 +104,6 @@ class UserStore {
         this.userName = name;
         this.referalCode = referalCode;
       });
-      console.log(user,'>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>');
       
       this.userAuthorizedHandler();
       if (user?.isFirstRegistration) {
@@ -120,15 +119,14 @@ class UserStore {
 
   async signInWithApple(name: string, appleToken: string) {
     try {
-       console.log('tokeeeeeeeeeeen', restApiRoutes.APPLE_SIGN_IN);
+          const finalName = name?.trim() ? name : "Prayer";
     const token = await this._rootStore.restApi.request<BaseAuthSuccessResult>({
       method: 'POST',
       path: restApiRoutes.APPLE_SIGN_IN,
-      body: { name, appleToken },
+      body: { name:finalName, appleToken },
       successStatus: 201,
     });
 
-    console.log('signInWithappljjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjje result', token);
     if (token?.result) {
       const { accessToken, refreshToken, user, referalCode } = token.result;
       runInAction(() => {
@@ -201,9 +199,12 @@ class UserStore {
 
     if (response?.result) {
       runInAction(() => {
+        
         this.userName = name;
+        
       });
     }
+    
   }
 
 
@@ -289,7 +290,6 @@ class UserStore {
   }
 
   updateUserSubscription(subscription: any) {
-    console.log(subscription,'666666667777-------------------00000000000');
     
   runInAction(() => {
     if (this.user) {
