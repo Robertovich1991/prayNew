@@ -144,8 +144,8 @@ const AnimatedCross = (props: IAnimatedCrossProps) => {
             source={Ray}
             style={{
               position: 'absolute',
-              width: '100%',
-              height: '100%',
+              width: '80%',
+              height: '80%',
               resizeMode: 'contain',
               top: '-25%',
               opacity: 0.5,
@@ -176,8 +176,8 @@ const AnimatedCross = (props: IAnimatedCrossProps) => {
             source={Ray}
             style={{
               position: 'absolute',
-              width: '100%',
-              height: '100%',
+              width: '80%',
+              height: '80%',
               resizeMode: 'contain',
               top: '-25%',
               opacity: props.isBlessed ? 1 : 0.5,
@@ -211,8 +211,8 @@ const AnimatedCross = (props: IAnimatedCrossProps) => {
             source={Ray}
             style={{
               position: 'absolute',
-              width: '100%',
-              height: '100%',
+              width: '80%',
+              height: '80%',
               resizeMode: 'contain',
               top: '20%',
               opacity: props.isBlessed ? 1 : 0.5,
@@ -239,9 +239,9 @@ const AnimatedCross = (props: IAnimatedCrossProps) => {
             source={CrossBg}
             style={{
               position: 'absolute',
-              width: '100%',
+              width: '80%',
               resizeMode: 'contain',
-              height: '100%',
+              height: '80%',
               top: '8%',
               opacity: opacity.interpolate({
                 inputRange: [0, 1],
@@ -323,7 +323,7 @@ const AnimatedCross = (props: IAnimatedCrossProps) => {
               },
             ],
             width: '100%',
-            height: '100%',
+            height: '80%',
             resizeMode: 'contain',
           }}
         />

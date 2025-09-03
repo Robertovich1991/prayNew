@@ -116,6 +116,16 @@ class WebSocketStore {
           this._rootStore.chatStore.addMessageFromWebsocket(result);
           return;
         }
+        if (method === 'typing-start') {
+          console.log('WebSocket received typing-start:', result);
+          this._rootStore.chatStore.setPastorTyping(true);
+          return;
+        }
+        if (method === 'typing-stop') {
+          console.log('WebSocket received typing-stop:', result);
+          this._rootStore.chatStore.setPastorTyping(false);
+          return;
+        }
         if (method === 'prayer-request') {
           this._rootStore.prayersStore.processPrayerEventFromWebsocket(result);
           return;

@@ -43,12 +43,13 @@ import TaskReligiousRituals from 'screens/confession-room/task-religious-rituals
 import TaskReligiousRitualsPerformingRitual from 'screens/confession-room/task-religious-rituals/TaskReligiousRitualsPerformingRitual';
 import TaskSocialTasks from 'screens/confession-room/task-social-tasks/TaskSocialTasks';
 import TaskSocialTasksPerformingRitual from 'screens/confession-room/task-social-tasks/TaskSocialTasksPerformingRitual';
+import Candles from 'screens/Candles';
 
 const RootStack = createStackNavigator();
 
 export default () => {
   console.log('------------------------------------------------------------');
-  
+
   return (
     <>
       <RootStack.Navigator
@@ -64,6 +65,8 @@ export default () => {
         <RootStack.Screen name={Routes.HOME_SCREEN} component={Home} />
         <RootStack.Screen name={Routes.ABOUT_US_SCREEN} component={About} />
         <RootStack.Screen name={Routes.TARIF_SCREEN} component={Tarif} />
+        <RootStack.Screen name={Routes.CANDLES_SCREEN} component={Candles} />
+
         <RootStack.Screen name={Routes.PROFILE_SCREEN} component={Profile} />
         <RootStack.Screen
           name={Routes.PRIVACY_POLICY}

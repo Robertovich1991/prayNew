@@ -23,6 +23,7 @@ import ErrorModal from 'screens/modals/ErrorModal';
 
 type RootStackParamList = {
   [Routes.TARIF_SCREEN]: undefined;
+  [Routes.CANDLES_SCREEN]:undefined
   [Routes.PRIEST_ONLINE]: undefined;
   [Routes.SELECT_LANGUAGE]: undefined;
   [Routes.MUSICAL_ACCOMPANIMENT]: undefined;
@@ -121,14 +122,20 @@ const Home = () => {
         <AnimatedCross isBlessed={false} />
       </View>
       <View style={styles.btnWrapper}>
-        <CustomButton
+         <CustomButton
           style={store.userStore.isUserBlessed?styles.blessed:null}
           title={blessedStatus}
+          onPress={() => {
+           navigation.navigate(Routes.TARIF_SCREEN);
+          }}
+        />
+        <CustomButton
+          title={t(T_KEYS.CANDLES_ONLINE)}
           onPress={() => {
             if (store.userStore.isUserBlessed) {
               showRenewSubModal();
             } else {
-              navigation.navigate(Routes.TARIF_SCREEN);
+              navigation.navigate(Routes.CANDLES_SCREEN);
             }
           }}
         />
@@ -170,8 +177,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   btnWrapper: {
-    marginTop: responsiveWidth(42),
-    height: responsiveWidth(120),
+    height: responsiveWidth(170),
     justifyContent: 'space-between',
     paddingHorizontal: responsiveWidth(44),
   },

@@ -16,6 +16,7 @@ export const EN_TRANSLATIONS: Translations = {
   [T_KEYS.SETTINGS_SCREEN_PUSH_DISABLED]: 'Disabled',
   [T_KEYS.SETTINGS_SCREEN_SOUND_DISABLED]: 'Disabled',
   [T_KEYS.SETTINGS_SCREEN_SOUND_ACTIVE]: 'Enabled',
+  [T_KEYS.CANDLES_ONLINE]:'Candles online',
   [T_KEYS.YOUR_NAME]: 'YOUR NAME',
   [T_KEYS.CONTINUE_WITH_GOOGLE]: 'Continue with Google',
   [T_KEYS.CANCEL]:'Cancel',

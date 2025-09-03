@@ -11,6 +11,7 @@ export const FR_TRANSLATIONS: Translations = {
   [T_KEYS.SETTINGS_SCREEN_BACKGROUND_SOUND_DISABLED]: 'Désactivé',
   [T_KEYS.SETTINGS_SCREEN_LANGUAGE]: 'Langue',
   [T_KEYS.SETTINGS_SCREEN_SOUND_DISABLED]: 'Désactivé',
+  [T_KEYS.CANDLES_ONLINE]:'Bougies en ligne',
   [T_KEYS.SETTINGS_SCREEN_SOUND_ACTIVE]: 'Activé',
   [T_KEYS.YOUR_NAME]: 'Votre nom',
   [T_KEYS.CONTINUE_WITH_GOOGLE]: 'Continuer sur Google',

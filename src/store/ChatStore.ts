@@ -16,6 +16,8 @@ class ChatStore {
   listChats: Chat[] = [];
   totalChatsCount = 0;
   unattendedMessagesCount = 0;
+  isPastorTyping = false;
+  isWaitingForResponse = false;
 
   constructor(rootStore: IRootStore) {
     this._rootStore = rootStore;
@@ -218,8 +220,19 @@ console.log(res?.result?.message,'----0000ooooooooooooooorhh');
   }
 
   async addMessageFromWebsocket(payload: WebsocketNewMessagePayload) {
+    console.log('addMessageFromWebsocket - message received:', payload.message.text);
+    
+    // Hide typing indicator when pastor responds
+    if (payload?.message?.authorId !== this._rootStore.userStore.user?.id) {
+      this.setPastorTyping(false);
+      console.log('Typing indicator hidden - pastor message received');
+    }
+    
     const chat = this.listChats.find(x => x.id === payload.chat.id);
     console.log('addMessageFromWebsocket', this.listChats, chat);
+    
+    // Hide typing indicator when a new message is received
+    this.setPastorTyping(false);
     if (!chat) {
       runInAction(() => {
         this.listChats = [
@@ -253,6 +266,9 @@ console.log(res?.result?.message,'----0000ooooooooooooooorhh');
 
     if (payload?.message?.authorId !== this._rootStore.userStore.user?.id) {
       this.setUnattendedMessagesCount(this.unattendedMessagesCount + 1);
+      // Ensure waiting indicator is hidden when pastor responds
+      this.setWaitingForResponse(false);
+      console.log('Pastor message received, waiting indicator hidden');
     }
   }
 
@@ -260,6 +276,31 @@ console.log(res?.result?.message,'----0000ooooooooooooooorhh');
     runInAction(() => {
       this.unattendedMessagesCount = count;
     });
+  }
+
+  setPastorTyping(isTyping: boolean) {
+    runInAction(() => {
+      this.isPastorTyping = isTyping;
+    });
+  }
+
+  setWaitingForResponse(isWaiting: boolean) {
+    runInAction(() => {
+      this.isWaitingForResponse = isWaiting;
+    });
+  }
+
+  async sendTypingIndicator(isTyping: boolean) {
+    try {
+      await this._rootStore.webSocketStore.call({
+        method: isTyping ? 'typing-start' : 'typing-stop',
+        params: {
+          chatId: this.currentChat?.id,
+        },
+      });
+    } catch (error) {
+      console.log('Error sending typing indicator:', error);
+    }
   }
 
   async attendadMessage() {
