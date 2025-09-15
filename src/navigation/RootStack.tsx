@@ -44,6 +44,7 @@ import TaskReligiousRitualsPerformingRitual from 'screens/confession-room/task-r
 import TaskSocialTasks from 'screens/confession-room/task-social-tasks/TaskSocialTasks';
 import TaskSocialTasksPerformingRitual from 'screens/confession-room/task-social-tasks/TaskSocialTasksPerformingRitual';
 import Candles from 'screens/Candles';
+import CandlesOnline from 'screens/CandlesOnline';
 
 const RootStack = createStackNavigator();
 
@@ -66,6 +67,7 @@ export default () => {
         <RootStack.Screen name={Routes.ABOUT_US_SCREEN} component={About} />
         <RootStack.Screen name={Routes.TARIF_SCREEN} component={Tarif} />
         <RootStack.Screen name={Routes.CANDLES_SCREEN} component={Candles} />
+        <RootStack.Screen name={Routes.CANDLES_ONLINE} component={CandlesOnline} />
 
         <RootStack.Screen name={Routes.PROFILE_SCREEN} component={Profile} />
         <RootStack.Screen

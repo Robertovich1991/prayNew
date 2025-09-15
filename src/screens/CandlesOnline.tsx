@@ -1,59 +1,24 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useState } from 'react';
+import React, {  } from 'react';
 import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
 import TopBar from '../components/TopBar';
 import { responsiveHeight, responsiveWidth } from '../common/utils';
 import Container from '../components/Container';
-import PlayfairTitle from '../components/PlayfairTitle';
-import { T_KEYS } from 'assets/translations';
 import useOwnTranslation from 'hooks/useOwnTranslation';
-import { useNavigation } from '@react-navigation/native';
 import CustomText from 'components/CustomText';
-import { useTheme } from '@rneui/themed';
-import BackArrow from '../assets/img/icons/backArrow.svg';
 
 import Video from 'react-native-video';
-import Routes from 'navigation/Routes';
+import ToggleSwitch from 'components/ToggleSwitch';
+import { useRoute } from '@react-navigation/native';
+import Amount from '../assets/img/icons/amount.svg'
 const { width, height } = Dimensions.get('window');
 
-const Candles = () => {
+const CandlesOnline = () => {
   const t = useOwnTranslation;
-  const navigation = useNavigation();
-  const [quantity, setQuantity] = useState(1);
-  const [selectedDuration, setSelectedDuration] = useState(1.5);
-  const { theme } = useTheme();
+const route =useRoute()
+const candles=route?.params?.candles
 
-  const durations = [
-    { value: 1, label: '1 minute' },
-    { value: 1.5, label: '1.5 minute' },
-    { value: 2, label: '2 minutes' },
-  ];
 
-  const handleQuantityChange = (change: number) => {
-    const newQuantity = Math.max(1, Math.min(200, quantity + change));
-    setQuantity(newQuantity);
-  };
-
-  const handleDurationSelect = (duration: number) => {
-    setSelectedDuration(duration);
-  };
-
-  const handlePurchase = () => {
-    // Handle purchase logic here
-    console.log(
-      `Purchasing ${quantity} candle(s) for ${selectedDuration} minute(s)`,
-    );
-  };
-
-  const subscribeCandles=useCallback(()=>{
-    if(quantity>3){
-      navigation.navigate(Routes.CANDLES_ONLINE,{candles:quantity})
-    }
-  },[quantity])
-
-  const getPrice = () => {
-    return quantity * 1; // $1 per candle
-  };
   return (
     <Container>
       <View
@@ -61,36 +26,16 @@ const Candles = () => {
       >
         <View>
           <View style={{ zIndex: 4 }}>
-            <TopBar backArrow={true} />
+            <TopBar
+              backArrow={true}
+              textStyle={{ color: 'white' }}
+              text="Candles Subscription"
+            />
           </View>
-          <View style={styles.titleWrapper}>
-            <PlayfairTitle>{t(T_KEYS.CANDLES_ONLINE)}</PlayfairTitle>
-          </View>
-          <TouchableOpacity onPress={subscribeCandles} style={[styles.promoBanner,{backgroundColor:theme.mode==='light'? theme.colors.buttonPrimary:'#191919'}]}>
-            {quantity < 4 && (
-              <View style={styles.giftIcon}>
-                <CustomText style={styles.giftText}>🎁</CustomText>
-              </View>
-            )}
-            {quantity < 4 ? (
-              <CustomText
-                style={styles.promoText}
-                color={theme.colors.textColorPrimary}
-              >
-                First three candles free just for you
-              </CustomText>
-            ) : (
-              <CustomText>Candles Subscription</CustomText>
-            )}
-            {quantity > 3 && (
-              <BackArrow
-                color={theme.colors.textColorPrimary}
-                width={responsiveWidth(20)}
-                height={responsiveWidth(20)}
-                style={{ transform: [{ rotate: '180deg' }] }}
-              />
-            )}
-          </TouchableOpacity>
+          <ToggleSwitch />
+          <CustomText fontSize={32} style={{zIndex:10,textAlign:'center',fontWeight:'700',paddingTop:50}}>{candles} CANDLES</CustomText>
+          <Amount style={{zIndex:77,alignSelf:'center',marginTop:5}}/>
+
         </View>
         <View style={styles.videoContainer}>
           <Video
@@ -102,68 +47,11 @@ const Candles = () => {
         </View>
         {/* Quantity Selector */}
         <View>
-          <View style={styles.quantityContainer}>
-            <TouchableOpacity
-              style={[styles.quantityButton,{backgroundColor:theme.mode==='light'? theme.colors.buttonPrimary:'#0F0F0F'}]}
-              onPress={() => handleQuantityChange(-1)}
-            >
-              <CustomText
-                style={styles.quantityButtonText}
-                color={theme.colors.textColorPrimary}
-              >
-                --
-              </CustomText>
-            </TouchableOpacity>
-
-            <View style={styles.quantityDisplay}>
-              <CustomText style={styles.quantityText} color={'#D9C28D'}>
-                {quantity} CANDLE{quantity > 1 ? 'S' : ''}
-              </CustomText>
-            </View>
-
-            <TouchableOpacity
-              style={styles.quantityButton}
-              onPress={() => handleQuantityChange(1)}
-            >
-              <CustomText
-                style={styles.quantityButtonText}
-                color={theme.colors.textColorPrimary}
-              >
-                +
-              </CustomText>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.durationContainer}>
-            {durations.map(duration => (
-              <TouchableOpacity
-                key={duration.value}
-                style={[
-                  styles.durationButton,
-                  selectedDuration === duration.value &&
-                    styles.durationButtonSelected,
-                ]}
-                onPress={() => handleDurationSelect(duration.value)}
-              >
-                <CustomText
-                  style={[
-                    styles.durationText,
-                    selectedDuration === duration.value &&
-                      styles.durationTextSelected,
-                  ]}
-                  color={'#D9C28D'}
-                >
-                  {duration.label}
-                </CustomText>
-              </TouchableOpacity>
-            ))}
-          </View>
           <TouchableOpacity
             style={styles.purchaseButton}
-            onPress={handlePurchase}
           >
             <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
-              Buy {quantity} candlestick{quantity > 1 ? 's' : ''} for $
-              {getPrice()}
+              Purchase a subscription
             </CustomText>
           </TouchableOpacity>
         </View>
@@ -332,4 +220,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Candles;
+export default CandlesOnline;

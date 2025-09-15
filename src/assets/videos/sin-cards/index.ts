@@ -6,6 +6,7 @@ const Columns1 = require('./columns1.mp4');
 const Face = require('./face.mp4');
 const Geometry = require('./geometry.mp4');
 const Mozaika1 = require('./mozaika1.mp4');
+const OnlineCandles = require('./online-candles.mp4');
 const Sparkles = require('./sparkles.mp4');
 
 export const SinCardVideos: Record<SinCardVideoKey, any> = {
@@ -17,5 +18,6 @@ export const SinCardVideos: Record<SinCardVideoKey, any> = {
   Face,
   Geometry,
   Mozaika1,
+  OnlineCandles,
   Sparkles,
 };

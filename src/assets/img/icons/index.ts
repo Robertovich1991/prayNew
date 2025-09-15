@@ -20,9 +20,11 @@ import ProgressWatches from './progressWatches.svg';
 import SearchMagnifier from './searchMagnifier.svg';
 import Star from './star.svg';
 import TetherLogo from './tetherLogo.svg';
+import Amount from './amount.svg'
 
 export const Icons = {
   ArrowOut,
+  Amount,
   Calendar,
   CheckMark2,
   ChristCross,
