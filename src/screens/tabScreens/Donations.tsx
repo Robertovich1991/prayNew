@@ -17,12 +17,12 @@ import store from 'store';
 import { observer } from 'mobx-react';
 import { useFocusEffect } from '@react-navigation/native';
 import SimpleModal from 'screens/modals/SimpleModal';
- import { getReceiptIOS, Product } from 'react-native-iap';
+//  import { getReceiptIOS, Product } from 'react-native-iap';
 import ThanksModal from 'screens/modals/ThanksModal';
 import { LogEvent, af_donation_started } from 'helpers/logEvents';
 import { useTheme } from '@rneui/themed';
 import { CustomizationColors } from 'styles/customization';
-import { PurchaseError, requestSubscription } from 'react-native-iap';
+// import { PurchaseError, requestSubscription } from 'react-native-iap';
 
 const Donations = () => {
   const [selectedDonation, setSelectedDonation] = useState(0);

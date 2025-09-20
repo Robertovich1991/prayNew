@@ -77,21 +77,27 @@ android {
     buildToolsVersion rootProject.ext.buildToolsVersion
     compileSdk rootProject.ext.compileSdkVersion
 
-    namespace "com.prayonline"
+    namespace "ru.nsstms.prayersforafrica.app"
     defaultConfig {
-        applicationId "com.prayonline"
+        applicationId "ru.nsstms.prayersforafrica.app"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
     }
-    signingConfigs {
+     signingConfigs {
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
             keyAlias 'androiddebugkey'
             keyPassword 'android'
         }
+         release {
+        storeFile file('C:\\_PROJECTS\\prayers-for-africa\\prayers-for-africa_release_keys.jks')
+        storePassword '123456'
+        keyAlias 'key0'
+        keyPassword '123456'
+    }
     }
     buildTypes {
         debug {

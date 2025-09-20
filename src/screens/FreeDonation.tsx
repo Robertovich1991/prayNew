@@ -234,7 +234,7 @@ import TopBar from 'components/TopBar';
 import { t } from 'i18next';
 import React, { useState } from 'react';
 import { View, StyleSheet, FlatList, Image, Alert } from 'react-native';
-import { PurchaseError, requestSubscription } from 'react-native-iap';
+// import { PurchaseError, requestSubscription } from 'react-native-iap';
 import store from 'store';
 import { CustomizationColors } from 'styles/customization';
 
