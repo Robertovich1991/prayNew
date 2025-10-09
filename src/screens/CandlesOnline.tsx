@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {  } from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { } from 'react';
+import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import TopBar from '../components/TopBar';
 import { responsiveHeight, responsiveWidth } from '../common/utils';
 import Container from '../components/Container';
@@ -15,9 +15,10 @@ const { width, height } = Dimensions.get('window');
 
 const CandlesOnline = () => {
   const t = useOwnTranslation;
-const route =useRoute()
-const candles=route?.params?.candles
-
+  const route = useRoute()
+  const candles = route?.params?.candles
+const candleImage=route?.params?.image
+console.log(candleImage,'....................................................');
 
   return (
     <Container>
@@ -33,17 +34,19 @@ const candles=route?.params?.candles
             />
           </View>
           <ToggleSwitch />
-          <CustomText fontSize={32} style={{zIndex:10,textAlign:'center',fontWeight:'700',paddingTop:50}}>{candles} CANDLES</CustomText>
-          <Amount style={{zIndex:77,alignSelf:'center',marginTop:5}}/>
+          <CustomText fontSize={32} style={{ zIndex: 10, textAlign: 'center', fontWeight: '700', paddingTop: 50 }}>{candles} CANDLES</CustomText>
+          <Amount style={{ zIndex: 77, alignSelf: 'center', marginTop: 5 }} />
 
         </View>
         <View style={styles.videoContainer}>
-          <Video
+          <Image style={{ height: '100%', width: '90%' }} resizeMode="cover" source={candleImage} />
+
+          {/* <Video
             source={require('../assets/videos/sin-cards/online-candles.mp4')}
             resizeMode="cover"
             repeat
             style={styles.video}
-          />
+          /> */}
         </View>
         {/* Quantity Selector */}
         <View>
