@@ -239,7 +239,7 @@ const AnimatedCross = (props: IAnimatedCrossProps) => {
             source={CrossBg}
             style={{
               position: 'absolute',
-              width: '80%',
+              width: '100%',
               resizeMode: 'contain',
               height: '80%',
               top: '8%',
