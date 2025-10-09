@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, Alert } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { responsiveWidth } from '../../../common/utils';
 import {
@@ -15,6 +17,14 @@ import Divider from '../../../components/Divider';
 import PlayfairTitle from '../../../components/PlayfairTitle';
 import TopBar from '../../../components/TopBar';
 import CustomButton from '../../../components/CustomButton';
+import store from '../../../store';
+import Routes from '../../../navigation/Routes';
+
+type RootStackParamList = {
+  [Routes.TARIF_SCREEN]: undefined;
+};
+
+type Props = StackNavigationProp<RootStackParamList>;
 
 const RedemptionTaskHeader: React.FC<{
   title: string;
@@ -22,6 +32,7 @@ const RedemptionTaskHeader: React.FC<{
   isRedemptionButtonEnabled: boolean;
   onBeginRedemptionPressed?: () => void;
 }> = props => {
+  const navigation = useNavigation<Props>();
   const {
     title,
     isTaskCompleted,
@@ -30,8 +41,25 @@ const RedemptionTaskHeader: React.FC<{
   } = props;
 
   const onPress = () => {
-    typeof onBeginRedemptionPressed === 'function' &&
-      onBeginRedemptionPressed();
+    if (store.userStore.isUserBlessed === false) {
+      Alert.alert(
+        'You must be blessed for beginning redemption',
+        '',
+        [
+          {
+            text: 'OK',
+            style: 'cancel',
+          },
+          {
+            text: 'Subscribe',
+            onPress: () => navigation.navigate(Routes.TARIF_SCREEN),
+          },
+        ]
+      );
+    } else {
+      typeof onBeginRedemptionPressed === 'function' &&
+        onBeginRedemptionPressed();
+    }
   };
 
   return (

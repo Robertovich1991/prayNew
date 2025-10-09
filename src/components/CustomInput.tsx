@@ -18,7 +18,7 @@ const CustomInput = (props: ICustomInputProps) => {
     <TextInput
       style={{
         ...styles.input,
-        backgroundColor: theme.colors.backgroundPrimary,
+       backgroundColor: theme.colors.backgroundPrimary,
         color: theme.colors.textColorSecondary,
       }}
       onChange={e => {
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     textAlign: 'center',
     fontSize: responsiveWidth(15),
-    padding: 0,
+    padding: 7,
   },
 });
 

@@ -31,8 +31,7 @@ const Navigation = () => {
 
 
 
-
-  const productIds = ['123','high_rate_donation_2_99',];
+  const productIds = ['middle_rate_donation_1_99','high_rate_donation_2_99','start_rate_donation_0_99',];
   
   useEffect(() => {
     async function init() {

@@ -54,13 +54,14 @@ const OnboardingItem = (props: IOnboardingItemProps) => {
               Stay online with God
             </CustomText>
           </View>
-          <View style={{ marginTop: responsiveWidth(57) }}>
+          <View style={{ marginTop: responsiveWidth(57), marginHorizontal: 5 }}>
             <CustomButton
               backgroundColor={CustomizationColors.get('ORANGE_PRIMARY')}
               onPress={() => {
                 navigation.navigate(Routes.AUTH_SCREEN);
               }}
               title={'Log In'}
+              style={{ marginBottom: 5 }}
             />
             <CustomButton
               backgroundColor={CustomizationColors.get('GREY_PRIMIARY')}
@@ -113,13 +114,14 @@ const OnboardingItem = (props: IOnboardingItemProps) => {
               </View>
             </View>
           )}
-          <View style={{ marginTop: responsiveWidth(57) }}>
+          <View style={{ marginTop: responsiveWidth(57), marginHorizontal: 5 }}>
             <CustomButton
               backgroundColor={CustomizationColors.get('ORANGE_PRIMARY')}
               onPress={() => {
                 navigation.navigate(Routes.AUTH_SCREEN);
               }}
               title={'Log In'}
+              style={{ marginBottom: 5 }}
             />
           </View>
         </View>
@@ -190,7 +192,7 @@ const styles = StyleSheet.create({
   paginationWrapper: {
     justifyContent: 'center',
     position: 'absolute',
-    bottom: responsiveWidth(179),
+    bottom: responsiveWidth(29),
     width: '100%',
   },
   featuresTitle: {

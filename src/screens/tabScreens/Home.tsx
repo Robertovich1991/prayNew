@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from 'react';
-import { View, StyleSheet, BackHandler } from 'react-native';
+import { View, StyleSheet, BackHandler, Alert } from 'react-native';
 import CustomButton from '../../components/CustomButton';
 import Routes from '../../navigation/Routes';
 import TopBar from '../../components/TopBar';
@@ -135,7 +135,8 @@ const Home = () => {
             if (store.userStore.isUserBlessed) {
               showRenewSubModal();
             } else {
-              navigation.navigate(Routes.CANDLES_SCREEN);
+            //  Alert.alert('Coming soon')
+             navigation.navigate(Routes.CANDLES_SCREEN);
             }
           }}
         />

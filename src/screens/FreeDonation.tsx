@@ -106,7 +106,7 @@
     console.log(skus, '------000000000099999iiiiiiii----');
         console.log( '------000000000099999iiiiiiii----');
       const result = await store.donationsStore.sendTransaction(skus);
-console.log(result,'-----++++++++++============+++++++ppppppp+++++++++++++++++');
+//console.log(result,'-----++++++++++============+++++++ppppppp+++++++++++++++++');
 
   } catch (error) {
     if (error instanceof PurchaseError) {

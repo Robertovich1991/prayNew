@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 
@@ -78,7 +78,24 @@ const ConfessionTasks: React.FC<{
           <CustomButton
             title={'Begin redemption'}
             onPress={() => {
-              store.confessionsStore.startConfessionRedemption(confession);
+              if (store.userStore.isUserBlessed === false) {
+                Alert.alert(
+                  'You must be blessed for beginning redemption',
+                  '',
+                  [
+                    {
+                      text: 'OK',
+                      style: 'cancel',
+                    },
+                    {
+                      text: 'Subscribe',
+                      onPress: () => navigation.navigate(Routes.TARIF_SCREEN),
+                    },
+                  ]
+                );
+              } else {
+                store.confessionsStore.startConfessionRedemption(confession);
+              }
             }}
             style={{
               ...styles.beginRedemptionButton,

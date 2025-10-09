@@ -17,6 +17,8 @@ interface ICustomTextProps {
 }
 
 const CustomText = (props: ICustomTextProps) => {
+  console.log(props.children,'....................');
+
   const { theme } = useTheme();
   let {
     fontSize = responsiveWidth(15),

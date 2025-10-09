@@ -49,8 +49,9 @@ const PastorsInfo = () => {
       </View>
       <ScrollView>
         <View style={styles.photoWrapper}>
-          <Image style={styles.photo} source={{ uri: itemImg }} />
+          <Image resizeMode='cover' style={styles.photo} source={{ uri: itemImg }} />
           <Image
+          
             style={styles.gradient}
             source={
               theme.mode === 'dark' ? PastorGradient : PastorWhiteGradient
@@ -118,7 +119,7 @@ const styles = StyleSheet.create({
   },
   photo: {
     width: '100%',
-    height: responsiveWidth(340),
+    height: responsiveWidth(630),
   },
   gradient: {
     width: '100%',
