@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">  <!-- ✅ Add tools namespace -->
-
+    xmlns:tools="http://schemas.android.com/tools"  
+package="ru.nsstms.prayersforafrica.app"
 >
 
     <uses-permission android:name="android.permission.INTERNET" />

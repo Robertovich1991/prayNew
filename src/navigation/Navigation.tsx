@@ -13,7 +13,7 @@ import { navigationRef } from './RefNavigation';
 import Container from 'components/Container';
 import SelectLanguage from '../screens/SelectLanguage';
 import MusicalAccompaniment from 'screens/MusicalAccompaniment';
-import * as RNIap from 'react-native-iap';
+// import * as RNIap from 'react-native-iap';
 
 
 const theme = {

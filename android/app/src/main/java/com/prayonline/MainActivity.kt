@@ -1,4 +1,4 @@
-package com.prayonline
+package ru.nsstms.prayersforafrica.app
 
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useCallback, useState } from 'react';
-import { Dimensions, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import TopBar from '../components/TopBar';
 import { responsiveHeight, responsiveWidth } from '../common/utils';
 import Container from '../components/Container';
@@ -9,8 +9,14 @@ import { T_KEYS } from 'assets/translations';
 import useOwnTranslation from 'hooks/useOwnTranslation';
 import { useNavigation } from '@react-navigation/native';
 import CustomText from 'components/CustomText';
+import SmallCandle from '../assets/img/smallCandle.png';
+import MediumCandle from '../assets/img/mediumCandle.jpg';
+import BigCandle from '../assets/img/bigCandle.jpg';
 import { useTheme } from '@rneui/themed';
 import BackArrow from '../assets/img/icons/backArrow.svg';
+import SmallCandleLight from '../assets/img/smallCandleLight.jpg';
+import MediumCandleLight from '../assets/img/mediumCandleLight.jpg';
+import BigCandleLight from '../assets/img/bigCandleLight.jpg';
 
 import Video from 'react-native-video';
 import Routes from 'navigation/Routes';
@@ -19,14 +25,18 @@ const { width, height } = Dimensions.get('window');
 const Candles = () => {
   const t = useOwnTranslation;
   const navigation = useNavigation();
-  const [quantity, setQuantity] = useState(1);
-  const [selectedDuration, setSelectedDuration] = useState(1.5);
   const { theme } = useTheme();
 
-  const durations = [
-    { value: 1, label: '1 minute' },
-    { value: 1.5, label: '1.5 minute' },
-    { value: 2, label: '2 minutes' },
+  const [quantity, setQuantity] = useState(1);
+  const [selectedDuration, setSelectedDuration] = useState(1); // default "Little"
+  const [candleImage, setCandleImage] = useState(
+    theme.mode === 'light' ? SmallCandleLight : SmallCandle
+  );
+
+  const sizes = [
+    { value: 1, label: 'Little' },
+    { value: 1.5, label: 'Medium' },
+    { value: 2, label: 'Big' },
   ];
 
   const handleQuantityChange = (change: number) => {
@@ -34,31 +44,36 @@ const Candles = () => {
     setQuantity(newQuantity);
   };
 
-  const handleDurationSelect = (duration: number) => {
-    setSelectedDuration(duration);
+  const handleDurationSelect = (size: number) => {
+    setSelectedDuration(size);
+    if (theme.mode === 'light') {
+      if (size === 1) setCandleImage(SmallCandleLight);
+      else if (size === 1.5) setCandleImage(MediumCandleLight);
+      else if (size === 2) setCandleImage(BigCandleLight);
+    } else {
+      if (size === 1) setCandleImage(SmallCandle);
+      else if (size === 1.5) setCandleImage(MediumCandle);
+      else if (size === 2) setCandleImage(BigCandle);
+    }
   };
 
   const handlePurchase = () => {
-    // Handle purchase logic here
-    console.log(
-      `Purchasing ${quantity} candle(s) for ${selectedDuration} minute(s)`,
-    );
+    console.log(`Purchasing ${quantity} candle(s) for ${selectedDuration} minute(s)`);
   };
 
-  const subscribeCandles=useCallback(()=>{
-    if(quantity>3){
-      navigation.navigate(Routes.CANDLES_ONLINE,{candles:quantity})
+  const subscribeCandles = useCallback(() => {
+    if (quantity > 3) {
+      navigation.navigate(Routes.CANDLES_ONLINE, { candles: quantity, image: candleImage });
     }
-  },[quantity])
+  }, [quantity,candleImage]);
 
   const getPrice = () => {
     return quantity * 1; // $1 per candle
   };
+
   return (
     <Container>
-      <View
-        style={{ justifyContent: 'space-between', flex: 1, paddingBottom: 50 }}
-      >
+      <View style={{ justifyContent: 'space-between', flex: 1, paddingBottom: 50 }}>
         <View>
           <View style={{ zIndex: 4 }}>
             <TopBar backArrow={true} />
@@ -66,17 +81,21 @@ const Candles = () => {
           <View style={styles.titleWrapper}>
             <PlayfairTitle>{t(T_KEYS.CANDLES_ONLINE)}</PlayfairTitle>
           </View>
-          <TouchableOpacity onPress={subscribeCandles} style={[styles.promoBanner,{backgroundColor:theme.mode==='light'? theme.colors.buttonPrimary:'#191919'}]}>
+
+          <TouchableOpacity
+            onPress={subscribeCandles}
+            style={[
+              styles.promoBanner,
+              { backgroundColor: theme.mode === 'light' ? theme.colors.buttonPrimary : '#191919' },
+            ]}
+          >
             {quantity < 4 && (
               <View style={styles.giftIcon}>
                 <CustomText style={styles.giftText}>🎁</CustomText>
               </View>
             )}
             {quantity < 4 ? (
-              <CustomText
-                style={styles.promoText}
-                color={theme.colors.textColorPrimary}
-              >
+              <CustomText style={styles.promoText} color={theme.colors.textColorPrimary}>
                 First three candles free just for you
               </CustomText>
             ) : (
@@ -92,78 +111,82 @@ const Candles = () => {
             )}
           </TouchableOpacity>
         </View>
+
         <View style={styles.videoContainer}>
-          <Video
+          <Image style={{ height: '100%', width: '90%' }} resizeMode="cover" source={candleImage} />
+          {/* <Video
             source={require('../assets/videos/sin-cards/online-candles.mp4')}
             resizeMode="cover"
             repeat
             style={styles.video}
-          />
+          /> */}
         </View>
-        {/* Quantity Selector */}
+
         <View>
           <View style={styles.quantityContainer}>
             <TouchableOpacity
-              style={[styles.quantityButton,{backgroundColor:theme.mode==='light'? theme.colors.buttonPrimary:'#0F0F0F'}]}
+              style={[
+                styles.quantityButton,
+                { backgroundColor: theme.mode === 'light' ? theme.colors.buttonPrimary : '#0F0F0F' },
+              ]}
               onPress={() => handleQuantityChange(-1)}
             >
-              <CustomText
-                style={styles.quantityButtonText}
-                color={theme.colors.textColorPrimary}
-              >
+              <CustomText style={styles.quantityButtonText} color={theme.colors.textColorPrimary}>
                 --
               </CustomText>
             </TouchableOpacity>
 
-            <View style={styles.quantityDisplay}>
+            <View
+              style={[
+                styles.quantityDisplay,
+                { backgroundColor: theme.mode === 'light' ? theme.colors.buttonPrimary : '#0F0F0F' },
+              ]}
+            >
               <CustomText style={styles.quantityText} color={'#D9C28D'}>
                 {quantity} CANDLE{quantity > 1 ? 'S' : ''}
               </CustomText>
             </View>
 
             <TouchableOpacity
-              style={styles.quantityButton}
+              style={[
+                styles.quantityButton,
+                { backgroundColor: theme.mode === 'light' ? theme.colors.buttonPrimary : '#0F0F0F' },
+              ]}
               onPress={() => handleQuantityChange(1)}
             >
-              <CustomText
-                style={styles.quantityButtonText}
-                color={theme.colors.textColorPrimary}
-              >
+              <CustomText style={styles.quantityButtonText} color={theme.colors.textColorPrimary}>
                 +
               </CustomText>
             </TouchableOpacity>
           </View>
+
           <View style={styles.durationContainer}>
-            {durations.map(duration => (
+            {sizes.map(size => (
               <TouchableOpacity
-                key={duration.value}
+                key={size.value}
                 style={[
                   styles.durationButton,
-                  selectedDuration === duration.value &&
-                    styles.durationButtonSelected,
+                  { backgroundColor: theme.mode === 'light' ? theme.colors.buttonPrimary : '#0F0F0F' },
+                  selectedDuration === size.value && styles.durationButtonSelected,
                 ]}
-                onPress={() => handleDurationSelect(duration.value)}
+                onPress={() => handleDurationSelect(size.value)}
               >
                 <CustomText
                   style={[
                     styles.durationText,
-                    selectedDuration === duration.value &&
-                      styles.durationTextSelected,
+                    selectedDuration === size.value && styles.durationTextSelected,
                   ]}
                   color={'#D9C28D'}
                 >
-                  {duration.label}
+                  {size.label}
                 </CustomText>
               </TouchableOpacity>
             ))}
           </View>
-          <TouchableOpacity
-            style={styles.purchaseButton}
-            onPress={handlePurchase}
-          >
+
+          <TouchableOpacity style={styles.purchaseButton} onPress={handlePurchase}>
             <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
-              Buy {quantity} candlestick{quantity > 1 ? 's' : ''} for $
-              {getPrice()}
+              Buy {quantity} candlestick{quantity > 1 ? 's' : ''} for ${getPrice()}
             </CustomText>
           </TouchableOpacity>
         </View>
@@ -233,14 +256,12 @@ const styles = StyleSheet.create({
   candle: {
     alignItems: 'center',
   },
-
   wick: {
     width: responsiveWidth(2),
     height: responsiveWidth(8),
     backgroundColor: '#000',
     marginBottom: responsiveWidth(8),
   },
-
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -320,7 +341,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     letterSpacing: 0.5,
   },
-
   videoContainer: {
     position: 'absolute',
     width: width,

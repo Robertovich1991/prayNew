@@ -1,4 +1,4 @@
-package com.prayonline
+package ru.nsstms.prayersforafrica.app
 
 import android.app.Application
 import com.facebook.react.PackageList
