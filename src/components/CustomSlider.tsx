@@ -21,6 +21,7 @@ const CustomSlider = () => {
   useEffect(() => {
     store.subscriptionsStore.fetchSubscriptions();
   }, []);
+console.log(store.subscriptionsStore.subscriptions,'.........................');
 
   return (
     <View style={styles.wrapper}>

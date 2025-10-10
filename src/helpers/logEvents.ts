@@ -44,7 +44,7 @@ export function ApsFlyerInit() {
 
 function FacebookSdkEvent(name: string, object: Params) {
   try {
-    AppEventsLogger.logEvent(name, object);
+  //  AppEventsLogger.logEvent(name, object);
     console.log('FacebookSdkEvent', name);
   } catch (e) {
     console.error('Error in FacebookSdkEvent', e);

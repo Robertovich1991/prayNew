@@ -50,7 +50,7 @@ const OnboardingItem = (props: IOnboardingItemProps) => {
             <View style={styles.lineWrapper}>
               <CustomLine />
             </View>
-            <CustomText style={{ textAlign: 'center' }}>
+            <CustomText  style={{ textAlign: 'center' }}>
               Stay online with God
             </CustomText>
           </View>

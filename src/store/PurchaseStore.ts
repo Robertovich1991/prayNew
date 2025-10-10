@@ -1,7 +1,7 @@
 import { restApiRoutes } from 'constants/rest-api';
 import { makeAutoObservable, runInAction } from 'mobx';
 import { IRootStore } from '.';
-//  import * as RNIap from 'react-native-iap';
+import * as RNIap from 'react-native-iap';
 import { EmitterSubscription, Platform } from 'react-native';
 import { PurchaseBaseResponse } from './responses/purchases';
 import { RegisteredSubscriptionBaseResponse } from './responses/subscriptions';
@@ -51,17 +51,6 @@ class PurchaseStore {
   }
 
   async getActiveProducts(productsSKUs: string[]) {
-    console.log(productsSKUs,'PPPPPPPPppppp');
-        console.log('PPPPPPPPppppp');
-        console.log('PPPPPPPPppppp');
-        console.log('PPPPPPPPppppp');
-        console.log('PPPPPPPPppppp');
-        console.log('PPPPPPPPppppp');
-        console.log('PPPPPPPPppppp');
-        console.log('PPPPPPPPppppp');
-        console.log('PPPPPPPPppppp');
-await RNIap.initConnection();
-
     await this.initRNIap();
     const products = await RNIap.getProducts({ skus: productsSKUs });
     console.log('getActiveDonations', products);
@@ -83,8 +72,12 @@ await RNIap.initConnection();
 
   async getAvailablePurchases() {
     await this.initRNIap();
+
     const purchases = await RNIap.getAvailablePurchases();
+            console.log(purchases,'.....hhhhh...................................................');
+
     const history = await RNIap.getPurchaseHistory();
+    
     return {
       purchases,
       history,

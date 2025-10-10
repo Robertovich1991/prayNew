@@ -42,7 +42,7 @@ const AuthScreen = () => {
         // Note: it appears putting FULL_NAME first is important, see issue #293
         requestedScopes: [appleAuth.Scope.FULL_NAME, appleAuth.Scope.EMAIL],
       });
-    
+
 
       // get current authentication state for user
       // /!\ This method must be tested on a real device. On the iOS simulator it always throws an error.
@@ -56,7 +56,7 @@ const AuthScreen = () => {
         );
         // store.modalsStore.hideSpinner();
       } else {
-        const firstName=name?name:"Prayer"
+        const firstName = name ? name : "Prayer"
         store.userStore.signInWithApple(
           firstName,
           appleAuthRequestResponse.identityToken,
@@ -101,7 +101,7 @@ const AuthScreen = () => {
               }}
             />
             <View style={styles.btnWrapper}>
-              <AuthButton
+              {Platform.OS === 'ios' && <AuthButton
 
                 onPress={onAppleButtonPress}
                 backgroundColor={theme.colors.buttonTertiary}
@@ -109,7 +109,7 @@ const AuthScreen = () => {
                 appleSvg
                 title={t(T_KEYS.CONTINUE_WITH_APPLE)}
                 style={styles.btnStyle}
-              />
+              />}
               <AuthButton
                 disabled={!activeGoogle}
                 backgroundColor={theme.colors.buttonTertiary}
@@ -140,6 +140,8 @@ const AuthScreen = () => {
                     await GoogleSignin.hasPlayServices();
 
                     const userInfo = await GoogleSignin.signIn();
+                    console.log(userInfo,'-------------------------------------');
+                    
                     const idToken =
                       userInfo?.idToken || userInfo?.data?.idToken;
 

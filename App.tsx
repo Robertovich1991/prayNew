@@ -6,6 +6,7 @@ import './i18next.config';
 import { ThemeProvider } from '@rneui/themed';
 import { theme } from './src/styles/createTheme';
 import { View } from 'react-native';
+import Candles from './src/screens/Candles';
 
 class App extends Component {
   render() {
