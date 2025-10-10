@@ -27,6 +27,7 @@ const Candles = () => {
   const navigation = useNavigation();
   const { theme } = useTheme();
 
+  const allowedQuantities = [1, 5, 10];
   const [quantity, setQuantity] = useState(1);
   const [selectedDuration, setSelectedDuration] = useState(1); // default "Little"
   const [candleImage, setCandleImage] = useState(
@@ -40,8 +41,17 @@ const Candles = () => {
   ];
 
   const handleQuantityChange = (change: number) => {
-    const newQuantity = Math.max(1, Math.min(200, quantity + change));
-    setQuantity(newQuantity);
+    const currentIndex = allowedQuantities.indexOf(quantity);
+    let newIndex = currentIndex + change;
+    
+    // Cycle through the allowed quantities
+    if (newIndex < 0) {
+      newIndex = allowedQuantities.length - 1;
+    } else if (newIndex >= allowedQuantities.length) {
+      newIndex = 0;
+    }
+    
+    setQuantity(allowedQuantities[newIndex]);
   };
 
   const handleDurationSelect = (size: number) => {

@@ -8,7 +8,7 @@ import useOwnTranslation from 'hooks/useOwnTranslation';
 import CustomText from 'components/CustomText';
 
 import Video from 'react-native-video';
-import ToggleSwitch from 'components/ToggleSwitch';
+// import ToggleSwitch from 'components/ToggleSwitch';
 import { useRoute } from '@react-navigation/native';
 import Amount from '../assets/img/icons/amount.svg'
 const { width, height } = Dimensions.get('window');
@@ -33,9 +33,9 @@ console.log(candleImage,'....................................................');
               text="Candles Subscription"
             />
           </View>
-          <ToggleSwitch />
+          {/* <ToggleSwitch /> */}
           <CustomText fontSize={32} style={{ zIndex: 10, textAlign: 'center', fontWeight: '700', paddingTop: 50 }}>{candles} CANDLES</CustomText>
-          <Amount style={{ zIndex: 77, alignSelf: 'center', marginTop: 5 }} />
+          {/* <Amount style={{ zIndex: 77, alignSelf: 'center', marginTop: 5 }} /> */}
 
         </View>
         <View style={styles.videoContainer}>
@@ -54,8 +54,8 @@ console.log(candleImage,'....................................................');
             style={styles.purchaseButton}
           >
             <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
-              Purchase a subscription
-            </CustomText>
+              Light a candle
+              </CustomText>
           </TouchableOpacity>
         </View>
       </View>
