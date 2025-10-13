@@ -13,7 +13,7 @@ import { navigationRef } from './RefNavigation';
 import Container from 'components/Container';
 import SelectLanguage from '../screens/SelectLanguage';
 import MusicalAccompaniment from 'screens/MusicalAccompaniment';
-// import * as RNIap from 'react-native-iap';
+ import * as RNIap from 'react-native-iap';
 
 
 const theme = {
@@ -38,8 +38,9 @@ const Navigation = () => {
       try {
         await RNIap.initConnection();
         setTimeout(async () => {
-          await RNIap.getSubscriptions({skus:productIds});
-          await RNIap.getProducts({skus:productIds});
+        const x=  await RNIap.getSubscriptions({skus:productIds});
+       const y =   await RNIap.getProducts({skus:productIds});
+      
         }, 1000); // Wait 1 second        console.log(products,'[[[[[[[[gggggggggggggggggg[[[[[[[[[[[[[[')
       } catch (err) {
         console.log(err);

@@ -1,24 +1,246 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import TopBar from '../components/TopBar';
 import { responsiveHeight, responsiveWidth } from '../common/utils';
 import Container from '../components/Container';
 import useOwnTranslation from 'hooks/useOwnTranslation';
 import CustomText from 'components/CustomText';
-
+import { useTheme } from '@rneui/themed';
+import store from 'store';
+import { restApiRoutes } from 'constants/rest-api';
+import MediumCandleUnlight from '../assets/img/candleUnlightMedium.jpg';
+import BigCandleUnlight from '../assets/img/candleUnlightBig.jpg';
+import SmallCandle from '../assets/img/smallCandle.png';
+import MediumCandle from '../assets/img/mediumCandle.jpg';
+import BigCandle from '../assets/img/bigCandle.jpg';
+import SmallCandleLight from '../assets/img/smallCandleLight.jpg';
+import MediumCandleLight from '../assets/img/mediumCandleLight.jpg';
+import BigCandleLight from '../assets/img/bigCandleLight.jpg';
+import LightCandle from '../assets/img/lightCandleLight.gif'
 import Video from 'react-native-video';
 // import ToggleSwitch from 'components/ToggleSwitch';
-import { useRoute } from '@react-navigation/native';
-import Amount from '../assets/img/icons/amount.svg'
+import { useNavigation, useRoute } from '@react-navigation/native';
+import Amount from '../assets/img/icons/amount.svg';
+import Routes from 'navigation/Routes';
 const { width, height } = Dimensions.get('window');
+
+interface CandleData {
+  small: number;
+  medium: number;
+  large: number;
+}
+
+interface CandleItem {
+  id: number;
+  userId: number;
+  candleSize: 'small' | 'medium' | 'large';
+  durationMinutes: number;
+  lightedAt: string | null;
+  expiresAt: string | null;
+  status: 'purchased' | 'lighted' | 'active' | 'expired';
+  purchaseId: string;
+  transactionId: string;
+  createdAt: string;
+}
 
 const CandlesOnline = () => {
   const t = useOwnTranslation;
-  const route = useRoute()
-  const candles = route?.params?.candles
-const candleImage=route?.params?.image
-console.log(candleImage,'....................................................');
+  const { theme } = useTheme();
+  const route = useRoute();
+  const navigation=useNavigation()
+  const candles = (route.params as any)?.candles;
+  const candleImage = (route.params as any)?.image;
+  const [selectedSize, setSelectedSize] = useState<'small' | 'medium' | 'large'>('small');
+  const [candleData, setCandleData] = useState<CandleData>({
+    small: 0,
+    medium: 0,
+    large: 0,
+  });
+  const [candlesArray, setCandlesArray] = useState<CandleItem[]>([]);
+  const [activeCandle, setActiveCandle] = useState<CandleItem | null>(null);
+  const [activeCandleSize, setActiveCandleSize] = useState<'small' | 'medium' | 'large' | ''>('');
+  const sizes = [
+    { value: 'small', label: 'Small' },
+    { value: 'medium', label: 'Medium' },
+    { value: 'large', label: 'Big' },
+  ];
+
+  useEffect(() => {
+    fetchMyCandlesData();
+  }, []);
+
+  // Check for expired candles periodically
+  useEffect(() => {
+    const checkExpiration = () => {
+      if (activeCandle && activeCandle.expiresAt) {
+        const expiresAtTime = new Date(activeCandle.expiresAt).getTime();
+        const nowTime = Date.now();
+
+        console.log('Expires at:', expiresAtTime, 'Now:', nowTime, 'Expired:', expiresAtTime < nowTime);
+
+        if (expiresAtTime < nowTime) {
+          console.log('Candle has expired, refetching data...');
+          fetchMyCandlesData();
+          getCurrentCandleImage();
+        }
+      }
+    };
+
+    // Check immediately
+    checkExpiration();
+
+    // Set up interval to check every 10 seconds
+    const interval = setInterval(checkExpiration, 10000);
+
+    return () => clearInterval(interval);
+  }, [activeCandle]);
+
+  const fetchMyCandlesData = async () => {
+    try {
+      const result = await store.restApi.request<any>({
+        method: 'GET',
+        path: restApiRoutes.MY_CANDLES,
+        withToken: true,
+      });
+
+      console.log('My Candles API Response:', result);
+
+      if (result.purchased && !result.error) {
+        // The response is an array of candle objects
+        const fetchedCandles: CandleItem[] = result.purchased || result.data?.purchased || result;
+        console.log('Candles Array:', fetchedCandles);
+        const activeFetchedCandles: CandleItem[] = result.active || result.data?.active || [];
+        if (Array.isArray(fetchedCandles)) {
+          // Store the full array
+          setCandlesArray(fetchedCandles);
+          console.log('Fetched candles array:', fetchedCandles);
+          console.log('Active candles array:', activeFetchedCandles);
+        if(activeFetchedCandles[0]) { setActiveCandleSize(activeFetchedCandles[0].candleSize);}
+          // Check for active (lit) candles
+          const litCandle = Array.isArray(activeFetchedCandles)
+            ? activeFetchedCandles.find((candle: CandleItem) => candle.status === 'active')
+            : null;
+
+          // Check if the lit candle has expired
+          if (litCandle && litCandle.expiresAt) {
+            const expiresAtTime = new Date(litCandle.expiresAt).getTime();
+            const nowTime = Date.now();
+
+            console.log('Lit candle check - Expires at:', expiresAtTime, 'Now:', nowTime);
+
+            if (expiresAtTime < nowTime) {
+              console.log('Lit candle has expired at:', new Date(expiresAtTime).toISOString(), 'Current time:', new Date(nowTime).toISOString());
+              // Refetch data to get updated status from backend
+              setTimeout(() => fetchMyCandlesData(), 1000);
+              setActiveCandle(null);
+              setActiveCandleSize('')
+            } else {
+              setActiveCandle(litCandle);
+              console.log('Active candle found:', litCandle);
+              console.log('Candle expires at:', new Date(expiresAtTime).toISOString());
+            }
+          } else {
+            setActiveCandle(litCandle || null);
+            if (litCandle) {
+              console.log('Active candle found:', litCandle);
+            }
+          }
+
+          // Count candles by size, only counting 'purchased' status
+          const counts = {
+            small: 0,
+            medium: 0,
+            large: 0,
+          };
+
+          fetchedCandles.forEach((candle: CandleItem) => {
+            if (candle.status === 'purchased' && candle.candleSize) {
+              counts[candle.candleSize] = (counts[candle.candleSize] || 0) + 1;
+            }
+          });
+
+          setCandleData(counts);
+          console.log('Candle sizes counted:', counts);
+          console.log('Total purchhhhhhhhhhhhhhhhased candles:', fetchedCandles.filter((c: CandleItem) => c.status === 'purchased').length);
+        }
+      }
+    } catch (error) {
+      console.error('Error fetching candles data:', error);
+    }
+  };
+
+  // Get the current candle image based on selected size and theme
+  const getCurrentCandleImage = () => {
+    console.log('hhhhhhhhhhdfsdhvbdshvcdsjhbvcdjshbcdsjhcbjdshcbjhdscjdscbjhdsbcjdshbcjdscbjhdscbdscjsdbjcbds');
+    
+    // If there's an active candle, show the image for that size
+    const sizeToShow = activeCandle ? activeCandle.candleSize : selectedSize;
+
+    console.log('Getting image for size:', sizeToShow, 'Theme mode:', theme.mode);
+
+    if (theme.mode === 'light') {
+      if (sizeToShow === 'small' && !activeCandleSize) return SmallCandleLight;
+      else if (sizeToShow === 'medium' && !activeCandleSize) return MediumCandleLight;
+      else if (sizeToShow === 'large' && !activeCandleSize)  return BigCandleLight;
+      else if (activeCandleSize === 'small') return LightCandle
+      else if (activeCandleSize === 'medium') return LightCandle;
+      else if (activeCandleSize === 'large') return LightCandle;
+    } else {
+      // Dark mode
+      if (sizeToShow === 'small'&& !activeCandleSize) return SmallCandle;
+      else if (sizeToShow === 'medium' && !activeCandleSize) return MediumCandle;
+      else if (sizeToShow === 'large' && !activeCandleSize ) return BigCandleUnlight;
+      else if (activeCandleSize === 'small') return LightCandle;
+      else if (activeCandleSize === 'medium') return LightCandle;
+      else if (activeCandleSize === 'large') return LightCandle
+    }
+    return SmallCandle; // default
+  };
+
+  // Get the quantity of currently selected size
+  const currentQuantity = candleData[selectedSize] || 0;
+
+  // Handle lighting a candle
+  const handleLightCandle = async () => {
+    try {
+      // Find the first purchased candle of the selected size
+      const candleToLight = candlesArray.find(
+        (candle) => candle.candleSize === selectedSize && candle.status === 'purchased'
+      );
+
+      if (!candleToLight) {
+        console.log('No candle found to light');
+        return;
+      }
+
+      console.log('Lighting candle with ID:', candleToLight.id);
+
+      // Make POST request to light the candle
+      const result = await store.restApi.request<any>({
+        method: 'POST',
+        path: restApiRoutes.LIGHT_CANDLE,
+        withToken: true,
+        body: {
+          candleId: candleToLight.id,
+        },
+      });
+
+      console.log('Light candle response:', result);
+
+      if (result && !result.error) {
+        console.log('Candle lit successfully!');
+        // Refresh the candles data to update the UI
+        await fetchMyCandlesData();
+        await getCurrentCandleImage();
+      } else {
+        console.error('Error lighting candle:', result?.error);
+      }
+    } catch (error) {
+      console.error('Error in handleLightCandle:', error);
+    }
+  };
+
 
   return (
     <Container>
@@ -34,12 +256,43 @@ console.log(candleImage,'....................................................');
             />
           </View>
           {/* <ToggleSwitch /> */}
-          <CustomText fontSize={32} style={{ zIndex: 10, textAlign: 'center', fontWeight: '700', paddingTop: 50 }}>{candles} CANDLES</CustomText>
+          <CustomText fontSize={32} style={{ zIndex: 10, textAlign: 'center', fontWeight: '700', paddingTop: 50 }}>{candles} MY CANDLES</CustomText>
           {/* <Amount style={{ zIndex: 77, alignSelf: 'center', marginTop: 5 }} /> */}
+          {/* Active Candle Message */}
+          {/* Candle Size Selector */}
+          <View style={styles.sizeContainer}>
+            {sizes.map((size) => {
+              const quantity = candleData[size.value as keyof CandleData] || 0;
+              const isDisabled = !!activeCandle;
+              return (
+                <TouchableOpacity
+                  key={size.value}
+                  style={[
+                    styles.sizeButton,
+                    { backgroundColor: theme.mode === 'light' ? theme.colors.buttonPrimary : '#0F0F0F' },
+                    selectedSize === size.value && styles.sizeButtonSelected,
+                    isDisabled && styles.sizeButtonDisabled,
+                  ]}
+                  onPress={() => !isDisabled && setSelectedSize(size.value as 'small' | 'medium' | 'large')}
+                  disabled={isDisabled}
+                >
+                  <CustomText
+                    style={{
+                      ...styles.sizeText,
+                      ...(selectedSize === size.value && styles.sizeTextSelected)
+                    }}
+                    color={isDisabled ? '#666' : '#D9C28D'}
+                  >
+                    {size.label} candles {quantity}
+                  </CustomText>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
 
         </View>
         <View style={styles.videoContainer}>
-          <Image style={{ height: '100%', width: '90%' }} resizeMode="cover" source={candleImage} />
+          <Image style={{ height: '100%', width: '90%' }} resizeMode="cover" source={getCurrentCandleImage()} />
 
           {/* <Video
             source={require('../assets/videos/sin-cards/online-candles.mp4')}
@@ -48,15 +301,47 @@ console.log(candleImage,'....................................................');
             style={styles.video}
           /> */}
         </View>
-        {/* Quantity Selector */}
-        <View>
-          <TouchableOpacity
-            style={styles.purchaseButton}
-          >
-            <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
-              Light a candle
+        {/* Message or Button */}
+        <View style={{gap:8}}>
+          {activeCandle ? (
+            <View style={styles.messageContainer}>
+              <CustomText
+                fontSize={18}
+                style={{ textAlign: 'center', fontWeight: '600' }}
+                color={theme.colors.textColorPrimary}
+              >
+                A candle is currently burning
               </CustomText>
-          </TouchableOpacity>
+            </View>
+          ) : currentQuantity === 0 ? (
+            <View style={styles.messageContainer}>
+              <CustomText
+                fontSize={18}
+                style={{ textAlign: 'center', fontWeight: '600' }}
+                color={theme.colors.textColorPrimary}
+              >
+                You haven't got candle of that size
+              </CustomText>
+            </View>
+          ) : (
+            <TouchableOpacity
+              style={styles.purchaseButton}
+              onPress={handleLightCandle}
+            >
+              <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
+                Light a candle
+              </CustomText>
+            </TouchableOpacity>
+            
+          )}
+          <TouchableOpacity
+              style={styles.purchaseButton}
+              onPress={()=>navigation.navigate (Routes.CANDLES_SCREEN)}
+            >
+              <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
+                Buy candles 
+              </CustomText>
+            </TouchableOpacity>
         </View>
       </View>
     </Container>
@@ -193,6 +478,47 @@ const styles = StyleSheet.create({
   },
   durationTextSelected: {
     fontWeight: '600',
+  },
+  sizeContainer: {
+    flexDirection: 'row',
+    marginHorizontal: responsiveWidth(20),
+    marginTop: responsiveHeight(20),
+    marginBottom: responsiveHeight(10),
+    zIndex: 8,
+  },
+  sizeButton: {
+    flex: 1,
+    backgroundColor: '#0F0F0F',
+    paddingVertical: responsiveWidth(12),
+    paddingHorizontal: responsiveWidth(8),
+    borderRadius: responsiveWidth(12),
+    alignItems: 'center',
+    marginHorizontal: responsiveWidth(4),
+  },
+  sizeButtonSelected: {
+    borderColor: '#D9C28D',
+    borderRadius: 12,
+    borderWidth: 1,
+  },
+  sizeButtonDisabled: {
+    opacity: 0.5,
+    backgroundColor: '#333',
+  },
+  sizeText: {
+    fontSize: responsiveWidth(12),
+    fontWeight: '500',
+    textAlign: 'center',
+  },
+  sizeTextSelected: {
+    fontWeight: '600',
+  },
+  messageContainer: {
+    backgroundColor: 'transparent',
+    marginHorizontal: responsiveWidth(20),
+    paddingVertical: responsiveWidth(20),
+    borderRadius: responsiveWidth(12),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   purchaseButton: {
     backgroundColor: '#D9C28D',

@@ -96,17 +96,12 @@
 
 
     const handleBuyProducts = async (productId: string) => {
-  console.log(productId, '>>>>>><<<<<<<<<<<<<<<<<99999999999999999');
-
   try {
     const skus = await requestSubscription({
       sku: productId,
     });
 
-    console.log(skus, '------000000000099999iiiiiiii----');
-        console.log( '------000000000099999iiiiiiii----');
-      const result = await store.donationsStore.sendTransaction(skus);
-//console.log(result,'-----++++++++++============+++++++ppppppp+++++++++++++++++');
+      await store.donationsStore.sendTransaction(skus);
 
   } catch (error) {
     if (error instanceof PurchaseError) {
@@ -234,6 +229,7 @@ import TopBar from 'components/TopBar';
 import { t } from 'i18next';
 import React, { useState } from 'react';
 import { View, StyleSheet, FlatList, Image, Alert } from 'react-native';
+import { PurchaseError, requestSubscription } from 'react-native-iap';
 // import { PurchaseError, requestSubscription } from 'react-native-iap';
 import store from 'store';
 import { CustomizationColors } from 'styles/customization';

@@ -19,6 +19,7 @@ export const restApiRoutes = {
   DONATIONS_LIST: '/donations',
   GRATITUDES_LIST: '/donations/gratitudes',
   SEND_TRANSACTION:'/purchases/apple-purchase',
+  SEND_CANDLE_TRANSACTION:'/candles/purchase',
   SEND_TRANSACTION_SUB:'/purchases/apple-subscription',
 
   NEW_PRAYER_REQUEST: '/requests/new-request',
@@ -40,4 +41,7 @@ export const restApiRoutes = {
   ACTIVATE_PROMO_SUBSCRIPTION: '/purchases/activate-promo-subscription',
 
   JOIN_OUR_COMMUNITY: '/content/join-our-community',
+
+  MY_CANDLES: '/candles/my-candles',
+  LIGHT_CANDLE: '/candles/light',
 };

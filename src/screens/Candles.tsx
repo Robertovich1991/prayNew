@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useCallback, useState } from 'react';
-import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { Alert, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import TopBar from '../components/TopBar';
 import { responsiveHeight, responsiveWidth } from '../common/utils';
 import Container from '../components/Container';
@@ -9,29 +9,37 @@ import { T_KEYS } from 'assets/translations';
 import useOwnTranslation from 'hooks/useOwnTranslation';
 import { useNavigation } from '@react-navigation/native';
 import CustomText from 'components/CustomText';
-import SmallCandle from '../assets/img/smallCandle.png';
-import MediumCandle from '../assets/img/mediumCandle.jpg';
-import BigCandle from '../assets/img/bigCandle.jpg';
+import CandleUnlight from '../assets/img/candleUnlightSmall.jpg'  
+import MediumCandleUnlight from '../assets/img/candleUnlightMedium.jpg';
+import BigCandleUnlight from '../assets/img/candleUnlightBig.jpg';
 import { useTheme } from '@rneui/themed';
-import BackArrow from '../assets/img/icons/backArrow.svg';
 import SmallCandleLight from '../assets/img/smallCandleLight.jpg';
 import MediumCandleLight from '../assets/img/mediumCandleLight.jpg';
 import BigCandleLight from '../assets/img/bigCandleLight.jpg';
 
 import Video from 'react-native-video';
 import Routes from 'navigation/Routes';
+import { StackNavigationProp } from '@react-navigation/stack';
+import * as RNIap from 'react-native-iap';
+import store from 'store';
 const { width, height } = Dimensions.get('window');
+
+type RootStackParamList = {
+  [Routes.CANDLES_ONLINE]: { candles: number; image: any };
+};
+
+type Props = StackNavigationProp<RootStackParamList>;
 
 const Candles = () => {
   const t = useOwnTranslation;
-  const navigation = useNavigation();
+  const navigation = useNavigation<Props>();
   const { theme } = useTheme();
 
   const allowedQuantities = [1, 5, 10];
   const [quantity, setQuantity] = useState(1);
   const [selectedDuration, setSelectedDuration] = useState(1); // default "Little"
   const [candleImage, setCandleImage] = useState(
-    theme.mode === 'light' ? SmallCandleLight : SmallCandle
+    theme.mode === 'light' ? SmallCandleLight : MediumCandleUnlight
   );
 
   const sizes = [
@@ -40,17 +48,48 @@ const Candles = () => {
     { value: 2, label: 'Big' },
   ];
 
+  const productIds = ["candle_1",
+    "candle_5",
+    "candle_10",
+    "candle_medium_1",
+    "candle_medium_5",
+    "candle_medium_10",
+    "candle_big_1",
+    "candle_big_5",
+    "candle_big_10",
+    "candle_big_1",
+    "candle_big_5",
+    "candle_big_10"]
+
+    useEffect(() => {
+      async function init() {
+        try {
+          const suc= await RNIap.initConnection();
+          setTimeout(async () => {
+             await RNIap.getSubscriptions({skus:productIds});
+            const x= await RNIap.getProducts({skus:productIds});           
+          }, 1000); // Wait 1 second        console.log(products,'[[[[[[[[gggggggggggggggggg[[[[[[[[[[[[[[')
+        } catch (err) {
+          console.log(err);
+        }
+      }
+      init();
+      return () => {
+      //  RNIap.endConnection();
+      };
+     }, []);
+
   const handleQuantityChange = (change: number) => {
     const currentIndex = allowedQuantities.indexOf(quantity);
     let newIndex = currentIndex + change;
-    
+
     // Cycle through the allowed quantities
     if (newIndex < 0) {
       newIndex = allowedQuantities.length - 1;
     } else if (newIndex >= allowedQuantities.length) {
       newIndex = 0;
     }
-    
+
     setQuantity(allowedQuantities[newIndex]);
   };
 
@@ -61,24 +100,79 @@ const Candles = () => {
       else if (size === 1.5) setCandleImage(MediumCandleLight);
       else if (size === 2) setCandleImage(BigCandleLight);
     } else {
-      if (size === 1) setCandleImage(SmallCandle);
-      else if (size === 1.5) setCandleImage(MediumCandle);
-      else if (size === 2) setCandleImage(BigCandle);
+      if (size === 1) setCandleImage(MediumCandleUnlight);
+      else if (size === 1.5) setCandleImage(MediumCandleUnlight);
+      else if (size === 2) setCandleImage(BigCandleUnlight);
     }
   };
 
-  const handlePurchase = () => {
-    console.log(`Purchasing ${quantity} candle(s) for ${selectedDuration} minute(s)`);
+  // Product ID mapping based on quantity and size
+  const getProductId = () => {
+    // Map size to product name: 1 = little/small, 1.5 = medium, 2 = big
+    const sizeMap: { [key: number]: string } = {
+      1: '',          // Little/small candles (no prefix)
+      1.5: 'medium_', // Medium candles
+      2: 'big_',      // Big candles
+    };
+
+    const sizePrefix = sizeMap[selectedDuration] || '';
+    return `candle_${sizePrefix}${quantity}`;
+  };
+
+ 
+  const handleBuyProducts = async () => {
+    const productId = getProductId();
+    console.log('Attempting to purchase:', productId);
+
+    try {
+      const skus = await RNIap.requestSubscription({
+        sku: productId,
+      });
+
+      console.log('Purchase successful:', skus);
+      const result = await store.donationsStore.sendCandlesTransaction(skus);
+console.log(result,'==--==--==--jjjkkk==--==--==--==--kkkkkk');
+
+      // You can add additional logic here to handle the purchase
+      // For example, sending the transaction to your backend
+      Alert.alert(
+        'Purchase Successful',
+        `Successfully purchased ${quantity} ${selectedDuration === 1 ? 'small' : selectedDuration === 1.5 ? 'medium' : 'big'} candle(s)`,
+        [{ text: 'OK' }]
+      );
+
+    } catch (error) {
+      if (error instanceof RNIap.PurchaseError) {
+        console.log({ message: `[${error.code}]: ${error.message}`, error });
+        Alert.alert(
+          'Purchase Error',
+          error.message,
+          [{ text: 'OK' }]
+        );
+      } else {
+        console.log('Purchase error:', error);
+        Alert.alert(
+          'Purchase Error',
+          'Unable to complete purchase. Please try again later.',
+          [{ text: 'OK' }]
+        );
+      }
+    }
   };
 
   const subscribeCandles = useCallback(() => {
-    if (quantity > 3) {
-      navigation.navigate(Routes.CANDLES_ONLINE, { candles: quantity, image: candleImage });
-    }
-  }, [quantity,candleImage]);
+    navigation.navigate(Routes.CANDLES_ONLINE);
+
+  }, [quantity, candleImage, navigation]);
 
   const getPrice = () => {
-    return quantity * 1; // $1 per candle
+    // Price structure based on quantity and size (matching StoreKit)
+    const priceMap: { [key: number]: { [key: number]: number } } = {
+      1: { 1: 0.99, 1.5: 1.99, 2: 2.99 },    // Little: $0.99, Medium: $1.99, Big: $2.99
+      5: { 1: 4.99, 1.5: 7.99, 2: 12.99 },   // Little: $4.99, Medium: $7.99, Big: $12.99
+      10: { 1: 9.99, 1.5: 13.99, 2: 24.99 }, // Little: $9.99, Medium: $13.99, Big: $24.99
+    };
+    return priceMap[quantity]?.[selectedDuration] || 0;
   };
 
   return (
@@ -92,34 +186,8 @@ const Candles = () => {
             <PlayfairTitle>{t(T_KEYS.CANDLES_ONLINE)}</PlayfairTitle>
           </View>
 
-          <TouchableOpacity
-            onPress={subscribeCandles}
-            style={[
-              styles.promoBanner,
-              { backgroundColor: theme.mode === 'light' ? theme.colors.buttonPrimary : '#191919' },
-            ]}
-          >
-            {quantity < 4 && (
-              <View style={styles.giftIcon}>
-                <CustomText style={styles.giftText}>🎁</CustomText>
-              </View>
-            )}
-            {quantity < 4 ? (
-              <CustomText style={styles.promoText} color={theme.colors.textColorPrimary}>
-                First three candles free just for you
-              </CustomText>
-            ) : (
-              <CustomText>Candles Subscription</CustomText>
-            )}
-            {quantity > 3 && (
-              <BackArrow
-                color={theme.colors.textColorPrimary}
-                width={responsiveWidth(20)}
-                height={responsiveWidth(20)}
-                style={{ transform: [{ rotate: '180deg' }] }}
-              />
-            )}
-          </TouchableOpacity>
+        
+
         </View>
 
         <View style={styles.videoContainer}>
@@ -182,10 +250,10 @@ const Candles = () => {
                 onPress={() => handleDurationSelect(size.value)}
               >
                 <CustomText
-                  style={[
-                    styles.durationText,
-                    selectedDuration === size.value && styles.durationTextSelected,
-                  ]}
+                  style={{
+                    ...styles.durationText,
+                    ...(selectedDuration === size.value && styles.durationTextSelected)
+                  }}
                   color={'#D9C28D'}
                 >
                   {size.label}
@@ -194,7 +262,7 @@ const Candles = () => {
             ))}
           </View>
 
-          <TouchableOpacity style={styles.purchaseButton} onPress={handlePurchase}>
+          <TouchableOpacity style={styles.purchaseButton} onPress={()=>handleBuyProducts()}>
             <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
               Buy {quantity} candlestick{quantity > 1 ? 's' : ''} for ${getPrice()}
             </CustomText>
@@ -236,9 +304,10 @@ const styles = StyleSheet.create({
   placeholder: {
     width: responsiveWidth(30),
   },
-  promoBanner: {
+  subscriptionButton: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'center',
     zIndex: 8,
     backgroundColor: '#191919',
     marginHorizontal: responsiveWidth(20),
@@ -246,17 +315,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: responsiveWidth(16),
     paddingVertical: responsiveWidth(12),
     borderRadius: responsiveWidth(12),
-    justifyContent: 'space-between',
-  },
-  giftIcon: {
-    marginRight: responsiveWidth(8),
-  },
-  giftText: {
-    fontSize: responsiveWidth(16),
-  },
-  promoText: {
-    fontSize: responsiveWidth(14),
-    flex: 1,
   },
   candleContainer: {
     alignItems: 'center',

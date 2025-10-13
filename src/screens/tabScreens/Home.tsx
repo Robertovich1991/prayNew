@@ -136,7 +136,7 @@ const Home = () => {
               showRenewSubModal();
             } else {
             //  Alert.alert('Coming soon')
-             navigation.navigate(Routes.CANDLES_SCREEN);
+             navigation.navigate(Routes.CANDLES_ONLINE);
             }
           }}
         />

@@ -30,6 +30,21 @@
       "type" : "Consumable"
     },
     {
+      "displayPrice" : "2.99",
+      "familyShareable" : false,
+      "internalID" : "6753856424",
+      "localizations" : [
+        {
+          "description" : "1 candle for you",
+          "displayName" : "1 candle big",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "candle_big_1",
+      "referenceName" : "1 candle big",
+      "type" : "Consumable"
+    },
+    {
       "displayPrice" : "1.99",
       "familyShareable" : false,
       "internalID" : "6753826050",
@@ -75,6 +90,21 @@
       "type" : "Consumable"
     },
     {
+      "displayPrice" : "24.99",
+      "familyShareable" : false,
+      "internalID" : "6753856489",
+      "localizations" : [
+        {
+          "description" : "10 candles for you",
+          "displayName" : "10 candles big",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "candle_big_10",
+      "referenceName" : "10 candles big",
+      "type" : "Consumable"
+    },
+    {
       "displayPrice" : "7.99",
       "familyShareable" : false,
       "internalID" : "6753828752",
@@ -102,6 +132,21 @@
       ],
       "productID" : "candle_5",
       "referenceName" : "5 candles",
+      "type" : "Consumable"
+    },
+    {
+      "displayPrice" : "12.99",
+      "familyShareable" : false,
+      "internalID" : "6753856562",
+      "localizations" : [
+        {
+          "description" : "1 big candle for you",
+          "displayName" : "1 candle big",
+          "locale" : "en_GB"
+        }
+      ],
+      "productID" : "candle_big_5",
+      "referenceName" : "5 candles big",
       "type" : "Consumable"
     },
     {
@@ -154,7 +199,7 @@
     "_applicationInternalID" : "6748395896",
     "_developerTeamID" : "9RBQZ3ZN9L",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 781739103.45611203,
+    "_lastSynchronizedDate" : 781853084.65502799,
     "_locale" : "en_US",
     "_storefront" : "USA",
     "_storeKitErrors" : [
@@ -225,7 +270,7 @@
           "groupNumber" : 1,
           "internalID" : "6749323784",
           "introductoryOffer" : {
-            "internalID" : "E90F900D",
+            "internalID" : "AC38E7E0",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P3D"
