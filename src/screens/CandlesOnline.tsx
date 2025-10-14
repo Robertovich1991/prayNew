@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from 'react';
-import { Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { Alert, Button, Dimensions, Image, StyleSheet, TouchableOpacity, View } from 'react-native';
 import TopBar from '../components/TopBar';
 import { responsiveHeight, responsiveWidth } from '../common/utils';
 import Container from '../components/Container';
@@ -69,6 +69,56 @@ const CandlesOnline = () => {
   useEffect(() => {
     fetchMyCandlesData();
   }, []);
+
+
+const candleQuotes = [
+  "Light a candle, and darkness will disappear.",
+  "One candle can light a thousand others without losing its flame.",
+  "Even the smallest candle shines in the darkest night.",
+  "In lighting a candle, we share our hope with the world.",
+  "Let your light be a prayer the world can see.",
+  "A candle loses nothing by lighting another candle.",
+  "Light a candle for those we love, for those we’ve lost, and for the hope that still burns.",
+  "Every candle lit is a prayer rising to the heavens.",
+  "To light a candle is to declare that darkness will not win.",
+  "A candle burns not only for remembrance, but for renewal.",
+];
+
+const getRandomQuote = () => {
+  const randomIndex = Math.floor(Math.random() * candleQuotes.length);
+  return candleQuotes[randomIndex];
+};
+
+ 
+  const showRandomCandleAlert = () => {
+    const quote = getRandomQuote();
+
+    Alert.alert(
+      '🕯️ Light a Candle',
+      quote,
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel', // makes it look like a cancel action
+        },
+        {
+          text: 'OK',
+          onPress: () => {
+            handleLightCandle()// Logs after pressing OK
+          },
+        },
+      ],
+      { cancelable: true }
+    );
+  
+
+  return (
+    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Button title="Light a Candle" onPress={showRandomCandleAlert} />
+    </View>
+  );
+}
+
 
   // Check for expired candles periodically
   useEffect(() => {
@@ -326,7 +376,7 @@ const CandlesOnline = () => {
           ) : (
             <TouchableOpacity
               style={styles.purchaseButton}
-              onPress={handleLightCandle}
+              onPress={showRandomCandleAlert}
             >
               <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
                 Light a candle
