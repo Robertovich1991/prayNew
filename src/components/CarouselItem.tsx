@@ -22,6 +22,7 @@ import {
 import ErrorModal from 'screens/modals/ErrorModal';
 import { useTheme } from '@rneui/themed';
 import { CustomizationColors } from 'styles/customization';
+import { requestSubscription } from 'react-native-iap';
 // import { requestSubscription } from 'react-native-iap';
 
 const formatBillingPeriod = (billingPeriod: string) => {

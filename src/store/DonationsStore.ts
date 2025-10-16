@@ -144,6 +144,29 @@ class DonationsStore {
   }
 }
 
+async sendCandlesTransaction(data: { transactionId: string }) {
+  try {    
+    const result = await this._rootStore.restApi.request<GratitudesListResponse>({
+      method: 'POST',
+      path: restApiRoutes.SEND_CANDLE_TRANSACTION,
+      withToken: true,
+      body: {
+        transactionId: data.transactionId,
+        productId:data.productId,
+        transactionReceipt:data.transactionReceipt,
+        transactionDate:data.transactionDate.toString()
+      },
+    });
+
+    console.log(result, 'RESULT TRANSACTION ------');
+    return result;
+  } catch (error) {
+    console.error('Transaction request failed:', error);
+    this._rootStore.modalStore.clearSpinner('fetchGratitudes');
+    return null;
+  }
+}
+
 // async sendTransactionSub(data: { transactionId: string }) {
 //   try {
 //     console.log(data,'......................');
