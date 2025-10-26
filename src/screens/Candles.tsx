@@ -13,9 +13,9 @@ import CandleUnlight from '../assets/img/candleUnlightSmall.jpg'
 import MediumCandleUnlight from '../assets/img/candleUnlightMedium.jpg';
 import BigCandleUnlight from '../assets/img/candleUnlightBig.jpg';
 import { useTheme } from '@rneui/themed';
-import SmallCandleLight from '../assets/img/smallCandleLight.jpg';
-import MediumCandleLight from '../assets/img/mediumCandleLight.jpg';
-import BigCandleLight from '../assets/img/bigCandleLight.jpg';
+import SmallCandleLight from '../assets/img/smallCandleLight.png';
+import MediumCandleLight from '../assets/img/mediumCandleLight.png';
+import BigCandleLight from '../assets/img/bigCandleLight.png';
 
 import Video from 'react-native-video';
 import Routes from 'navigation/Routes';
@@ -37,15 +37,15 @@ const Candles = () => {
 
   const allowedQuantities = [1, 5, 10];
   const [quantity, setQuantity] = useState(1);
-  const [selectedDuration, setSelectedDuration] = useState(1); // default "Little"
+  const [selectedDuration, setSelectedDuration] = useState(1); // default "Small"
   const [candleImage, setCandleImage] = useState(
     theme.mode === 'light' ? SmallCandleLight : MediumCandleUnlight
   );
 
   const sizes = [
-    { value: 1, label: 'Little' },
-    { value: 1.5, label: 'Medium' },
-    { value: 2, label: 'Big' },
+    { value: 1, label: t(T_KEYS.CANDLE_SIZE_SMALL) },
+    { value: 1.5, label: t(T_KEYS.CANDLE_SIZE_MEDIUM) },
+    { value: 2, label: t(T_KEYS.CANDLE_SIZE_BIG) },
   ];
 
   const productIds = ["candle_1",
@@ -108,9 +108,9 @@ const Candles = () => {
 
   // Product ID mapping based on quantity and size
   const getProductId = () => {
-    // Map size to product name: 1 = little/small, 1.5 = medium, 2 = big
+    // Map size to product name: 1 = small, 1.5 = medium, 2 = big
     const sizeMap: { [key: number]: string } = {
-      1: '',          // Little/small candles (no prefix)
+      1: '',          // Small candles (no prefix)
       1.5: 'medium_', // Medium candles
       2: 'big_',      // Big candles
     };
@@ -136,22 +136,22 @@ console.log(result,'==--==--==--jjjkkk==--==--==--==--kkkkkk');
       // You can add additional logic here to handle the purchase
       // For example, sending the transaction to your backend
       Alert.alert(
-        'Purchase Successful',
-        `Successfully purchased ${quantity} ${selectedDuration === 1 ? 'small' : selectedDuration === 1.5 ? 'medium' : 'big'} candle(s)`,
+        t(T_KEYS.PURCHASE_SUCCESSFUL),
+        `${t(T_KEYS.SUCCESSFULLY_PURCHASED)} ${quantity} ${selectedDuration === 1 ? t(T_KEYS.CANDLE_SIZE_SMALL) : selectedDuration === 1.5 ? t(T_KEYS.CANDLE_SIZE_MEDIUM) : t(T_KEYS.CANDLE_SIZE_BIG)} ${quantity > 1 ? t(T_KEYS.CANDLES) : t(T_KEYS.CANDLE)}`,
         [{ text: 'OK' }]
       );
 
     } catch (error) {
       if (error instanceof RNIap.PurchaseError) {
         console.log({ message: `[${error.code}]: ${error.message}`, error });
-        Alert.alert(
+        console.log(
           'Purchase Error',
           error.message,
           [{ text: 'OK' }]
         );
       } else {
         console.log('Purchase error:', error);
-        Alert.alert(
+        console.log(
           'Purchase Error',
           'Unable to complete purchase. Please try again later.',
           [{ text: 'OK' }]
@@ -168,18 +168,27 @@ console.log(result,'==--==--==--jjjkkk==--==--==--==--kkkkkk');
   const getPrice = () => {
     // Price structure based on quantity and size (matching StoreKit)
     const priceMap: { [key: number]: { [key: number]: number } } = {
-      1: { 1: 0.99, 1.5: 1.99, 2: 2.99 },    // Little: $0.99, Medium: $1.99, Big: $2.99
-      5: { 1: 4.99, 1.5: 7.99, 2: 12.99 },   // Little: $4.99, Medium: $7.99, Big: $12.99
-      10: { 1: 9.99, 1.5: 13.99, 2: 24.99 }, // Little: $9.99, Medium: $13.99, Big: $24.99
+      1: { 1: 0.99, 1.5: 1.99, 2: 2.99 },    // Small: $0.99, Medium: $1.99, Big: $2.99
+      5: { 1: 4.99, 1.5: 7.99, 2: 12.99 },   // Small: $4.99, Medium: $7.99, Big: $12.99
+      10: { 1: 9.99, 1.5: 13.99, 2: 24.99 }, // Small: $9.99, Medium: $13.99, Big: $24.99
     };
     return priceMap[quantity]?.[selectedDuration] || 0;
   };
 
   return (
     <Container>
-      <View style={{ justifyContent: 'space-between', flex: 1, paddingBottom: 50 }}>
-        <View>
-          <View style={{ zIndex: 4 }}>
+<View
+  style={{
+    justifyContent: 'space-between',
+    flex: 1,
+    backgroundColor:
+      theme.mode === 'light'
+        ? '#FBFCFC'
+        : 'black',
+    paddingBottom: 50,
+  }}
+>        <View>
+          <View style={{ zIndex: 4, paddingTop: 10, paddingHorizontal: 20 }}>
             <TopBar backArrow={true} />
           </View>
           <View style={styles.titleWrapper}>
@@ -191,7 +200,7 @@ console.log(result,'==--==--==--jjjkkk==--==--==--==--kkkkkk');
         </View>
 
         <View style={styles.videoContainer}>
-          <Image style={{ height: '100%', width: '90%' }} resizeMode="cover" source={candleImage} />
+          <Image style={{ height: '90%', width: '90%' }} resizeMode="center" source={candleImage} />
           {/* <Video
             source={require('../assets/videos/sin-cards/online-candles.mp4')}
             resizeMode="cover"
@@ -210,7 +219,7 @@ console.log(result,'==--==--==--jjjkkk==--==--==--==--kkkkkk');
               onPress={() => handleQuantityChange(-1)}
             >
               <CustomText style={styles.quantityButtonText} color={theme.colors.textColorPrimary}>
-                --
+                -
               </CustomText>
             </TouchableOpacity>
 
@@ -264,7 +273,7 @@ console.log(result,'==--==--==--jjjkkk==--==--==--==--kkkkkk');
 
           <TouchableOpacity style={styles.purchaseButton} onPress={()=>handleBuyProducts()}>
             <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
-              Buy {quantity} candlestick{quantity > 1 ? 's' : ''} for ${getPrice()}
+              {quantity > 1 ? t(T_KEYS.BUY_CANDLESTICKS) : t(T_KEYS.BUY_CANDLESTICK)} {quantity} {t(T_KEYS.FOR_PRICE)} ${getPrice()}
             </CustomText>
           </TouchableOpacity>
         </View>
@@ -353,7 +362,6 @@ const styles = StyleSheet.create({
     flex: 1,
     borderColor: '#2A2A2A',
     backgroundColor: '#191919',
-    borderWidth: 1,
     marginHorizontal: responsiveWidth(16),
     paddingVertical: responsiveWidth(12),
     paddingHorizontal: responsiveWidth(16),

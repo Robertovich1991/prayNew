@@ -54,7 +54,7 @@ const RedemptionReadingTheBible = () => {
   };
 
   return (
-    <ScrollView style={styles.fullContainer}>
+    <View style={styles.fullContainer}>
       <RedemptionTaskHeader
         onBeginRedemptionPressed={onBeginRedemptionPressed}
         isRedemptionButtonEnabled={isRedemptionButtonEnabled}
@@ -62,7 +62,7 @@ const RedemptionReadingTheBible = () => {
         title="Reading the Bible"
       />
 
-      <View style={styles.content}>
+      <ScrollView nestedScrollEnabled style={styles.content}>
         <RedemptionContentElement title="Instructions for the task">
           <CustomText
             fontSize={responsiveWidth(12)}
@@ -104,8 +104,8 @@ const RedemptionReadingTheBible = () => {
           />
         </RedemptionContentElement>
         <Divider height={responsiveWidth(44)} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     width: WINDOW_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: '#191919',
-    paddingTop:40
+    paddingTop:50
   },
   content: {
     paddingHorizontal: responsiveWidth(20),

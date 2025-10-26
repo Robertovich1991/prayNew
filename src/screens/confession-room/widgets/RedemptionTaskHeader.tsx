@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   },
   backgroundImageWrapper: {
     position: 'absolute',
-    top: 0,
+    top: 50,
     left: 0,
     bottom: 0,
     right: 0,

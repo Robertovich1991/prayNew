@@ -51,7 +51,7 @@ const TaskPrayerRecitation = () => {
   };
 
   return (
-    <ScrollView style={styles.fullContainer}>
+    <View style={styles.fullContainer}>
       <RedemptionTaskHeader
         isRedemptionButtonEnabled={isRedemptionButtonEnabled}
         isTaskCompleted={taskProgress?.isCompleted || false}
@@ -91,7 +91,7 @@ const TaskPrayerRecitation = () => {
         </RedemptionContentElement>
         <Divider height={responsiveWidth(44)} />
       </View>
-    </ScrollView>
+    </View>
   );
 };
 
@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
     width: WINDOW_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: '#191919',
+    paddingTop:50
   },
   content: {
     paddingHorizontal: responsiveWidth(20),

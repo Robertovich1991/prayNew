@@ -7,7 +7,7 @@ import CustomButton from 'components/CustomButton';
 import CustomPicker from 'components/CustomPicker';
 import TopBar from 'components/TopBar';
 import useOwnTranslation from 'hooks/useOwnTranslation';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import store from 'store';
 import { ICommonSettings } from 'store/CommonStore';
@@ -15,9 +15,36 @@ import { ICommonSettings } from 'store/CommonStore';
 const Settings = () => {
   const navigation = useNavigation();
   const t = useOwnTranslation;
-  const [settings, setSettings] = useState<ICommonSettings>({
-    ...store.commonStore.settings,
+  const [settings, setSettings] = useState<ICommonSettings>(() => {
+    // Show the actual stored theme, only default to 'light' if no theme is set
+    const storeSettings = store.commonStore.settings;
+    
+    return {
+      ...storeSettings,
+      theme: storeSettings?.theme || 'light', // Only default to light if no theme is set
+    };
   });
+
+  
+
+  // Ensure settings are properly loaded
+  useEffect(() => {
+    const checkSettings = () => {
+      const currentSettings = store.commonStore.settings;
+      
+      if (store.commonStore.settingsInited && currentSettings) {
+        setSettings({
+          ...currentSettings,
+          theme: currentSettings.theme || 'light', // Only default to light if not set
+        });
+      } else {
+        // If settings not yet initialized, check again after a short delay
+        setTimeout(checkSettings, 100);
+      }
+    };
+    
+    checkSettings();
+  }, []);
 
   const pushNotifications = [
     { label: t(T_KEYS.SETTINGS_SCREEN_PUSH_ACTIVE), value: true },
@@ -40,21 +67,22 @@ const Settings = () => {
   const languages = [
     { label: 'English', value: 'en' },
     { label: 'French', value: 'fr' },
+    { label: 'Spanish', value: 'es' },
   ];
 
   const themes = [
-    { label: 'Dark', value: 'dark' },
     { label: 'Light', value: 'light' },
+    { label: 'Dark', value: 'dark' },
   ];
 
-  const _themeSettingsChangesHandler = (theme: 'dark' | 'light') => {
+  const _themeSettingsChangesHandler = (theme: 'light' | 'dark') => {
     setSettings({
       ...settings,
       theme: theme,
     });
   };
 
-  const _languageSettingsChangesHandler = (lang: 'en' | 'fr') => {
+  const _languageSettingsChangesHandler = (lang: 'en' | 'fr' | 'es') => {
     setSettings({
       ...settings,
       language: lang,

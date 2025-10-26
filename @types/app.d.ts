@@ -1,6 +1,7 @@
 type LanguageBasedStructure = {
   en: string;
   fr: string;
+  es: string;
 };
 
 type GratitudeType =

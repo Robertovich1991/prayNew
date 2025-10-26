@@ -12,8 +12,8 @@ import { BaseResponse } from './responses';
 import { ApsFlyerInit } from 'helpers/logEvents';
 
 export interface ICommonSettings {
-  language?: 'en' | 'fr';
-  theme: 'dark' | 'light';
+  language?: 'en' | 'fr' | 'es';
+  theme: 'light' | 'dark';
   isSoundActive?: boolean;
   isBackgroundSound?: boolean;
   isPushNotificationsActive?: boolean;
@@ -62,7 +62,7 @@ class CommonStore {
   private _rootStore: IRootStore;
 
   appState: AppStateStatus = 'background';
-  settings: ICommonSettings = { theme: 'dark' };
+  settings: ICommonSettings = { theme: 'light' };
 //  trackPlayer?: State = undefined;
 
   settingsInited = false;

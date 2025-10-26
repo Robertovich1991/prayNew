@@ -41,13 +41,13 @@ const TaskSocialTasks = () => {
   const taskProgress = confessionProgress?.tasks.find(x => x.key === task.key);
 
   return (
-    <ScrollView style={styles.fullContainer}>
+    <View style={styles.fullContainer}>
       <RedemptionTaskHeader
         isRedemptionButtonEnabled={false}
         isTaskCompleted={taskProgress?.isCompleted || false}
         title="Social tasks"
       />
-      <View style={styles.content}>
+      <ScrollView nestedScrollEnabled style={styles.content}>
         <RedemptionContentElement title="List of social tasks">
           {task.listOfSocialTasks.map(socialTask => {
             const onPress = () => {
@@ -102,8 +102,8 @@ const TaskSocialTasks = () => {
           <ExecutionElement title="Overall task" value={task.overallTask} />
         </RedemptionContentElement>
         <Divider height={responsiveWidth(44)} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
     width: WINDOW_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: '#191919',
+    paddingTop:50
   },
   content: {
     paddingHorizontal: responsiveWidth(20),

@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
     width: WINDOW_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: '#191919',
+    paddingTop: 50,
   },
   content: {
     paddingHorizontal: responsiveWidth(20),
