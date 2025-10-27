@@ -41,7 +41,7 @@ export const ES_TRANSLATIONS: Translations = {
     'Por tanto, confesaos vuestros pecados unos a otros, y orad unos por otros, para que seáis sanados. La oración eficaz del justo puede mucho.',
   [T_KEYS.ABOUT_SCREEN_NAME]: 'Santiago 5:16',
   [T_KEYS.ABOUT_SCREEN_TEXT]:
-    'Somos pastores de toda África, que tuvimos visiones y revelaciones simultáneas del Señor y Él nos ordenó predicar al pueblo africano y unir a los cristianos africanos de todo el mundo.',
+    'Somos pastores en todo el mundo. que tuvimos visiones y revelaciones simultáneas del Señor y Él nos ordenó predicar al pueblo africano y unir a los cristianos africanos de todo el mundo.',
   [T_KEYS.PROFILE_SCREEN_TITLE]: 'Perfil',
   [T_KEYS.PROFILE_SCREEN_EDIT]: 'EDITAR PERFIL',
   [T_KEYS.PROFILE_SCREEN_PRAYER_REQUEST]: 'Tus peticiones de oración',
@@ -231,5 +231,10 @@ export const ES_TRANSLATIONS: Translations = {
   [T_KEYS.CANDLES]: 'velas',
   [T_KEYS.PURCHASE_SUCCESSFUL]: 'Compra Exitosa',
   [T_KEYS.SUCCESSFULLY_PURCHASED]: 'Comprado exitosamente',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_REQUIRED]: 'Suscripción Requerida',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_MESSAGE]: 'Para contactar al pastor, necesitas suscribirte a nuestro servicio. ¿Te gustaría suscribirte ahora?',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_CANCEL]: 'Cancelar',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_SUBSCRIBE]: 'Suscribirse',
+  [T_KEYS.NAME_REQUIRED]: 'El nombre es requerido',
 };
 

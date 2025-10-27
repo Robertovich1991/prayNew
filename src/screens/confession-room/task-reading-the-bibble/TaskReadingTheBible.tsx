@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 
@@ -8,6 +8,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ConfessionRoomNavigationProps } from '../../../navigation/navigationProps';
 
 import store from '../../../store';
+import { T_KEYS } from '../../../assets/translations';
+import useOwnTranslation from '../../../hooks/useOwnTranslation';
 
 import { useLanguageBasedStructure as language } from '../../../hooks';
 import { responsiveWidth } from '../../../common/utils';
@@ -23,6 +25,7 @@ import RedemptionTaskHeader from '../widgets/RedemptionTaskHeader';
 const RedemptionReadingTheBible = () => {
   const navigation =
     useNavigation<StackNavigationProp<ConfessionRoomNavigationProps>>();
+  const t = useOwnTranslation;
 
   const { params } =
     useRoute<
@@ -51,6 +54,31 @@ const RedemptionReadingTheBible = () => {
         machineName,
       },
     );
+  };
+
+  const handleContactPastor = () => {
+    if (store.userStore.isUserBlessed) {
+      // User is blessed, navigate to online pastor screen
+      navigation.navigate(Routes.PRIEST_ONLINE);
+    } else {
+      // User is not blessed, show subscription alert
+      Alert.alert(
+        t(T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_REQUIRED),
+        t(T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_MESSAGE),
+        [
+          {
+            text: t(T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_CANCEL),
+            style: 'cancel',
+          },
+          {
+            text: t(T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_SUBSCRIBE),
+            onPress: () => {
+              navigation.navigate(Routes.TARIF_SCREEN);
+            },
+          },
+        ]
+      );
+    }
   };
 
   return (
@@ -84,7 +112,7 @@ const RedemptionReadingTheBible = () => {
           <Divider height={responsiveWidth(12)} />
           <CustomButton
             title={'Contact the pastor'}
-            onPress={() => {}}
+            onPress={handleContactPastor}
             style={styles.contactThePastorButton}
             btnTextStyle={styles.contactThePastorButtonText}
           />

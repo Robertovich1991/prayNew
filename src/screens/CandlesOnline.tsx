@@ -14,11 +14,12 @@ import MediumCandleUnlight from '../assets/img/candleUnlightMedium.jpg';
 import BigCandleUnlight from '../assets/img/candleUnlightBig.jpg';
 import SmallCandle from '../assets/img/smallCandle.png';
 import MediumCandle from '../assets/img/mediumCandle.jpg';
-import BigCandle from '../assets/img/bigCandle.jpg';
+import BigCandle from '../assets/img/candleUnlightBig.jpg';
 import SmallCandleLight from '../assets/img/smallCandleLight.png';
 import MediumCandleLight from '../assets/img/mediumCandleLight.png';
 import BigCandleLight from '../assets/img/bigCandleLight.png';
 import LightCandle from '../assets/img/lightCandleLight.gif'
+import CandleLight from '../assets/img/candleLight.gif'
 import { useTranslation } from 'react-i18next';
 
 import Video from 'react-native-video';
@@ -64,9 +65,9 @@ const CandlesOnline = () => {
   const [activeCandle, setActiveCandle] = useState<CandleItem | null>(null);
   const [activeCandleSize, setActiveCandleSize] = useState<'small' | 'medium' | 'large' | ''>('');
   const sizes = React.useMemo(() => [
-    { value: 'small', label: t(T_KEYS.CANDLE_SIZE_SMALL) },
-    { value: 'medium', label: t(T_KEYS.CANDLE_SIZE_MEDIUM) },
-    { value: 'large', label: t(T_KEYS.CANDLE_SIZE_BIG) },
+    { value: 'small', label: `${t(T_KEYS.CANDLE_SIZE_SMALL)} Candle ` },
+    { value: 'medium', label: `${t(T_KEYS.CANDLE_SIZE_MEDIUM)} Candle` },
+    { value: 'large', label: `${t(T_KEYS.CANDLE_SIZE_BIG)}\nCandle` },
   ], [t]);
 
   useEffect(() => {
@@ -239,23 +240,21 @@ const getRandomQuote = React.useCallback(() => {
 
     console.log('Getting image for size:', sizeToShow, 'Theme mode:', theme.mode);
 
-    if (theme.mode === 'light') {
-      if (sizeToShow === 'small' && !activeCandleSize) return SmallCandleLight;
-      else if (sizeToShow === 'medium' && !activeCandleSize) return MediumCandleLight;
-      else if (sizeToShow === 'large' && !activeCandleSize)  return BigCandleLight;
-      else if (activeCandleSize === 'small') return LightCandle
-      else if (activeCandleSize === 'medium') return LightCandle;
-      else if (activeCandleSize === 'large') return LightCandle;
+    // For unlit candles, use theme-appropriate image
+    if (!activeCandleSize) {
+      if (theme.mode === 'light') {
+        return SmallCandleLight;
+      } else {
+        return BigCandle;
+      }
     } else {
-      // Dark mode
-      if (sizeToShow === 'small'&& !activeCandleSize) return SmallCandle;
-      else if (sizeToShow === 'medium' && !activeCandleSize) return MediumCandle;
-      else if (sizeToShow === 'large' && !activeCandleSize ) return BigCandleUnlight;
-      else if (activeCandleSize === 'small') return LightCandle;
-      else if (activeCandleSize === 'medium') return LightCandle;
-      else if (activeCandleSize === 'large') return LightCandle
+      // For lit candles, use theme-appropriate animated image
+      if (theme.mode === 'light') {
+        return LightCandle;
+      } else {
+        return CandleLight;
+      }
     }
-    return SmallCandle; // default
   };
 
   // Get the quantity of currently selected size
@@ -360,14 +359,18 @@ const getRandomQuote = React.useCallback(() => {
 
         </View>
         <View style={styles.videoContainer}>
-          <Image style={{ height: '50%', width: '50%' }} resizeMode='center' source={getCurrentCandleImage()} />
-
-          {/* <Video
-            source={require('../assets/videos/sin-cards/online-candles.mp4')}
-            resizeMode="cover"
-            repeat
-            style={styles.video}
-          /> */}
+          <Image 
+            style={{ 
+              alignSelf: 'center', 
+              height: responsiveHeight(650), 
+              width: activeCandleSize ? responsiveWidth(180) : 
+                     selectedSize === 'small' ? responsiveWidth(100) : 
+                     selectedSize === 'medium' ? responsiveWidth(120) : 
+                     responsiveWidth(140)
+            }} 
+            resizeMode='contain' 
+            source={getCurrentCandleImage()} 
+          />
         </View>
         {/* Message or Button */}
         <View style={{gap:8}}>
@@ -609,10 +612,8 @@ const styles = StyleSheet.create({
 
   videoContainer: {
     position: 'absolute',
-    width: width,
-    top:height/6,
-    left:width/5,
-    height: height,
+    width: '100%',
+    height: '100%',
   },
   video: {
     width: '90%',

@@ -38,7 +38,7 @@ export const FR_TRANSLATIONS: Translations = {
     "Donc, confessez vos péchés l'un à l'autre et priez l'un pour l'autre, afin que vous soyez guéris. La prière d'une personne vertueuse est très puissante dans son effet.",
   [T_KEYS.ABOUT_SCREEN_NAME]: 'Jacob 5:16',
   [T_KEYS.ABOUT_SCREEN_TEXT]:
-    "Nous sommes les pasteurs de toute l'Afrique, qui ont eu des visions et des révélations simultanées du Seigneur et Lui avons demandé de prier pour les Africains et pour tous les chrétiens africains du monde entier.",
+    "Nous sommes des pasteurs partout dans le monde. qui ont eu des visions et des révélations simultanées du Seigneur et Lui avons demandé de prier pour les Africains et pour tous les chrétiens africains du monde entier.",
   [T_KEYS.PROFILE_SCREEN_TITLE]: 'Profil',
   [T_KEYS.PROFILE_SCREEN_EDIT]: 'MODIFIER LE PROFIL',
   [T_KEYS.PROFILE_SCREEN_PRAYER_REQUEST]: 'Vos requêtes de prière',
@@ -138,6 +138,7 @@ export const FR_TRANSLATIONS: Translations = {
   [T_KEYS.SETTINGS_SCREEN_PUSH_TOGGLE]: 'Notifications push',
   [T_KEYS.SETTINGS_SCREEN_PUSH_ACTIVE]: 'Activé',
   [T_KEYS.SETTINGS_SCREEN_PUSH_DISABLED]: 'Désactivé',
+  [T_KEYS.SETTINGS_SCREEN_THEME]: 'Thème',
   [T_KEYS.PLEASE_CONFIRM]: 'Please, confirm',
   [T_KEYS.ARE_YOU_SHURE_TO_REVOKE_YOUR_SUBSCRIPTION]:
     'Êtes-vous sûr de révoquer votre abonnement ?',
@@ -176,13 +177,36 @@ export const FR_TRANSLATIONS: Translations = {
     'Nos pasteurs prient pour vous. Où que vous alliez, quoi que vous fassiez, les anges de Dieu veillent sur vous et vous gardent toujours en sécurité.',
   [T_KEYS.RENEW_SUB_CARD_CHANGE_PLAN]: 'Changer de forfait',
   [T_KEYS.ARTICLES_SCREEN_SHARING_TEXT]: 'Vous pouvez lire cet article ici',
-  [T_KEYS.EXPIRED]: 'EXPIRÉ',
   [T_KEYS.PROFILE_SCREEN_AVOID_SERVICE]: 'Éviter le service',
   [T_KEYS.GET_THE_FIRST_WEEK]: 'Obtenez la première semaine',
   [T_KEYS.FREE]: 'GRATUITEMENT',
   [T_KEYS.BECOME_BLESSED]: 'DEVENEZ BÉNI',
   [T_KEYS.SUBSCRIPTION_WITH_TRIAL_CANCELLED]:
     "Nous avons annulé votre paiement et votre abonnement d'essai sera annulé le",
+  
+  // Referral Program translations
+  [T_KEYS.REFERRAL_PROGRAM]: 'Programme de Parrainage',
+  [T_KEYS.LOYALTY_STATUS]: 'Statut de fidélité',
+  [T_KEYS.REFERRALS]: 'Parrainages',
+  [T_KEYS.INVITE_MORE_REFERRALS_TO_GET_FREE_SUBSCRIPTION]:
+    'Invitez %%REFERRAL_COUNTER%% parrainages de plus pour obtenir un abonnement gratuit',
+  [T_KEYS.YOUR_NEXT_SUBSCRIPTION_WILL_BE_FREE]:
+    'Votre prochain abonnement sera gratuit (valide jusqu\'à 1 an après l\'abonnement)',
+  [T_KEYS.COPIED_TO_CLIPBOARD]: 'Copié dans le presse-papiers',
+  [T_KEYS.SHARE_BUTTON_TITLE]: 'PARTAGER',
+  [T_KEYS.PAY_SUBSCRIPTION]: 'Payer l\'abonnement',
+  [T_KEYS.WITHDRAW_BONUSES]: 'Retirer les bonus',
+  [T_KEYS.HOW_IT_WORKS]: 'Comment ça marche ?',
+  [T_KEYS.CALCULATION_SCHEME]: 'Schéma de calcul',
+  [T_KEYS.YOUR_REFERRALS]: 'Vos parrainages',
+  [T_KEYS.REGISTRATION]: 'Inscription',
+  [T_KEYS.PURCHASE]: 'Achat',
+  [T_KEYS.FILTERS]: 'Filtres',
+  [T_KEYS.FILTER_ATTRIBUTE_THIS_MONTH]: 'Ce mois-ci',
+  [T_KEYS.FILTER_ATTRIBUTE_LAST_MONTH]: 'Le mois dernier',
+  [T_KEYS.FILTER_ATTRIBUTE_IN_THREE_MONTHS]: 'Dans 3 mois',
+  [T_KEYS.FILTER_ATTRIBUTE_OVER_THE_YEAR]: 'Sur l\'année',
+  [T_KEYS.FILTER_ATTRIBUTE_ALL_REFERRALS]: 'Tous les parrainages',
   
   // Candle-related translations
   [T_KEYS.SMALL_CANDLES]: 'Petites Bougies',
@@ -218,4 +242,9 @@ export const FR_TRANSLATIONS: Translations = {
   [T_KEYS.CANDLES]: 'bougies',
   [T_KEYS.PURCHASE_SUCCESSFUL]: 'Achat Réussi',
   [T_KEYS.SUCCESSFULLY_PURCHASED]: 'Acheté avec succès',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_REQUIRED]: 'Abonnement Requis',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_MESSAGE]: 'Pour contacter le pasteur, vous devez vous abonner à notre service. Souhaitez-vous vous abonner maintenant ?',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_CANCEL]: 'Annuler',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_SUBSCRIBE]: 'S\'abonner',
+  [T_KEYS.NAME_REQUIRED]: 'Le nom est requis',
 };

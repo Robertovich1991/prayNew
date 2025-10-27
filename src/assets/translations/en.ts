@@ -41,7 +41,7 @@ export const EN_TRANSLATIONS: Translations = {
     'Therefore, confess your sins to one another and pray for one another, so that you may be healed. The prayer of a righteous person is very powerful in its effect.',
   [T_KEYS.ABOUT_SCREEN_NAME]: 'James 5:16',
   [T_KEYS.ABOUT_SCREEN_TEXT]:
-    'We are pastors all over Africa, who had  simultaneous visions and revelations of the Lord and He commanded us to preach to African people and unite African Christians all over the world.',
+    'We are pastors all over the World, who had  simultaneous visions and revelations of the Lord and He commanded us to preach to African people and unite African Christians all over the world.',
   [T_KEYS.PROFILE_SCREEN_TITLE]: 'Profile',
   [T_KEYS.PROFILE_SCREEN_EDIT]: 'EDIT PROFILE',
   [T_KEYS.PROFILE_SCREEN_PRAYER_REQUEST]: 'Your prayer requests',
@@ -231,4 +231,9 @@ export const EN_TRANSLATIONS: Translations = {
   [T_KEYS.CANDLES]: 'candles',
   [T_KEYS.PURCHASE_SUCCESSFUL]: 'Purchase Successful',
   [T_KEYS.SUCCESSFULLY_PURCHASED]: 'Successfully purchased',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_REQUIRED]: 'Subscription Required',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_MESSAGE]: 'To contact the pastor, you need to subscribe to our service. Would you like to subscribe now?',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_CANCEL]: 'Cancel',
+  [T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_SUBSCRIBE]: 'Subscribe',
+  [T_KEYS.NAME_REQUIRED]: 'Name is required',
 };

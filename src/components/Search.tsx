@@ -43,7 +43,7 @@ const Search = () => {
           height={responsiveWidth(16)}
         />
         <TextInput
-          placeholder={t(T_KEYS.SEARCH_INPUT_PLACEHOLDER)}
+          placeholder={t( T_KEYS.SEARCH_INPUT_PLACEHOLDER)}
           placeholderTextColor={theme.colors.textColorTertiary}
           onChangeText={search => setState({ search })}
           style={{ ...styles.input, color: theme.colors.textColorTertiary }}
@@ -74,6 +74,7 @@ const styles = StyleSheet.create({
   },
   searchIcon: {
     marginLeft: responsiveWidth(16),
+    marginRight: responsiveWidth(8),
   },
   input: {
     flex: 1,

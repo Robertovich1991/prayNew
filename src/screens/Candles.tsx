@@ -39,13 +39,13 @@ const Candles = () => {
   const [quantity, setQuantity] = useState(1);
   const [selectedDuration, setSelectedDuration] = useState(1); // default "Small"
   const [candleImage, setCandleImage] = useState(
-    theme.mode === 'light' ? SmallCandleLight : MediumCandleUnlight
+    theme.mode === 'light' ? SmallCandleLight : BigCandleUnlight
   );
 
   const sizes = [
-    { value: 1, label: t(T_KEYS.CANDLE_SIZE_SMALL) },
-    { value: 1.5, label: t(T_KEYS.CANDLE_SIZE_MEDIUM) },
-    { value: 2, label: t(T_KEYS.CANDLE_SIZE_BIG) },
+    { value: 1, label: `${t(T_KEYS.CANDLE_SIZE_SMALL)} Candle    1min` },
+    { value: 1.5, label: `${t(T_KEYS.CANDLE_SIZE_MEDIUM)} Candle    5min` },
+    { value: 2, label: `${t(T_KEYS.CANDLE_SIZE_BIG)}\nCandle 10min` },
   ];
 
   const productIds = ["candle_1",
@@ -95,14 +95,11 @@ const Candles = () => {
 
   const handleDurationSelect = (size: number) => {
     setSelectedDuration(size);
+    // Use theme-appropriate image
     if (theme.mode === 'light') {
-      if (size === 1) setCandleImage(SmallCandleLight);
-      else if (size === 1.5) setCandleImage(MediumCandleLight);
-      else if (size === 2) setCandleImage(BigCandleLight);
+      setCandleImage(SmallCandleLight);
     } else {
-      if (size === 1) setCandleImage(MediumCandleUnlight);
-      else if (size === 1.5) setCandleImage(MediumCandleUnlight);
-      else if (size === 2) setCandleImage(BigCandleUnlight);
+      setCandleImage(BigCandleUnlight);
     }
   };
 
@@ -200,13 +197,17 @@ console.log(result,'==--==--==--jjjkkk==--==--==--==--kkkkkk');
         </View>
 
         <View style={styles.videoContainer}>
-          <Image style={{ height: '90%', width: '90%' }} resizeMode="center" source={candleImage} />
-          {/* <Video
-            source={require('../assets/videos/sin-cards/online-candles.mp4')}
-            resizeMode="cover"
-            repeat
-            style={styles.video}
-          /> */}
+        <Image
+    source={candleImage}
+    resizeMode="contain"
+    style={{
+      width: selectedDuration === 1 ? responsiveWidth(100) : 
+             selectedDuration === 1.5 ? responsiveWidth(120) : 
+             responsiveWidth(140),
+      height: responsiveHeight(600),
+      alignSelf: 'center',
+    }}
+  />
         </View>
 
         <View>
@@ -419,8 +420,8 @@ const styles = StyleSheet.create({
   },
   videoContainer: {
     position: 'absolute',
-    width: width,
-    height: height,
+    width: '100%',
+    height: '100%',
   },
   video: {
     width: '90%',
