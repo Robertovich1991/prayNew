@@ -4,7 +4,7 @@ import appsFlyer from 'react-native-appsflyer';
 const initOptions = {
   devKey: 'aVDwWKkqyfNVAxmcWTmziP',
   // devKey: 'Df7wjF5Mqs3iL3S74iJhnN',
-  isDebug: true,
+  isDebug: false,
    appId: '6748395896',
   onInstallConversionDataListener: true, //Optional
   onDeepLinkListener: true, //Optional

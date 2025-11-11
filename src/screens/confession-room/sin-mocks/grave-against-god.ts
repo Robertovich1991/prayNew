@@ -102,8 +102,7 @@ const idolatrySin: SinElement = {
     },
   ],
   additionalLinks: [
-    'https://example.com/idolatry-prayers',
-    'https://example.com/bible-study',
+    'https://prayandbless.app',
   ],
   additionalVideo: {
     url: 'https://dnznrvs05pmza.cloudfront.net/b277f921-307c-4bee-b9e5-d7cb7e2dd99a.mp4?_jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJrZXlIYXNoIjoiYTY5MmY1YjE2Yjk4NDBhZCIsImJ1Y2tldCI6InJ1bndheS10YXNrLWFydGlmYWN0cyIsInN0YWdlIjoicHJvZCIsImV4cCI6MTc0OTYwMDAwMH0.areefLzvXDCVf3k8bsP3n0knqLE4GK9bps0fASmvVKw',
