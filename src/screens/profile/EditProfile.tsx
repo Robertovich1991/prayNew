@@ -19,6 +19,7 @@ import { useTranslation } from 'react-i18next';
 const EditProfile = () => {
   const navigation = useNavigation();
   const [editableName, setEditableName] = useState(store.userStore.userName);
+  const [nameError, setNameError] = useState('');
   const { theme } = useTheme();
   const {t} = useTranslation()
 
@@ -33,6 +34,15 @@ const EditProfile = () => {
   };
 const esim =() => {
                 Keyboard.dismiss();
+                
+                // Validate name field
+                if (!editableName || editableName.trim() === '') {
+                  setNameError(t(T_KEYS.NAME_REQUIRED));
+                  return;
+                }
+                
+                // Clear any previous error
+                setNameError('');
                 showChangeSavedModal();
                 store.userStore.setCurrentUserName(editableName);
               }
@@ -54,9 +64,22 @@ const esim =() => {
           <CustomInput
             onChange={newName => {
               setEditableName(newName);
+              // Clear error when user starts typing
+              if (nameError) {
+                setNameError('');
+              }
             }}
             initialValue={editableName}
           />
+          {nameError ? (
+            <CustomText
+              fontSize={responsiveWidth(12)}
+              color="#FF6B6B"
+              style={styles.errorText}
+            >
+              {nameError}
+            </CustomText>
+          ) : null}
           <View style={styles.btnWrapper}>
             <CustomButton
               onPress={esim}
@@ -85,6 +108,10 @@ const styles = StyleSheet.create({
   btnWrapper: {
     width: '100%',
     marginTop: responsiveWidth(48),
+  },
+  errorText: {
+    marginTop: responsiveWidth(8),
+    textAlign: 'center',
   },
 });
 

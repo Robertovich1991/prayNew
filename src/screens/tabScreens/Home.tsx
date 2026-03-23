@@ -132,12 +132,10 @@ const Home = () => {
         <CustomButton
           title={t(T_KEYS.CANDLES_ONLINE)}
           onPress={() => {
-            if (store.userStore.isUserBlessed) {
-              showRenewSubModal();
-            } else {
+           
             //  Alert.alert('Coming soon')
              navigation.navigate(Routes.CANDLES_ONLINE);
-            }
+            
           }}
         />
         <CustomButton

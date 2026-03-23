@@ -5,8 +5,8 @@ export const restApiRoutes = {
   API_BACKED_URL:
     process.env.NODE_ENV === 'development'
   // ? 'http://85.209.195.224:5001/api':'http://85.209.195.224:5001/api',
-   ? 'https://app.prayersforafrica.org/api'
-  : 'https://app.prayersforafrica.org/api',
+   ? 'https://app.romeblogue.store/api'
+  : 'https://app.romeblogue.store/api',
   /**
    * Здесь живет авторизация Google
    */

@@ -21,6 +21,22 @@ export const filterSin = (params: {
 }) => {
   const { sin, sinType, sinSeverity, searchQuery } = params;
 
+  // Check if sin is not empty - validate essential fields
+  const isValidSin = 
+    sin.machineName && 
+    sin.machineName.trim() !== '' &&
+    sin.headerTitle && 
+    (sin.headerTitle.en?.trim() !== '' || sin.headerTitle.fr?.trim() !== '') &&
+    sin.description && 
+    (sin.description.en?.trim() !== '' || sin.description.fr?.trim() !== '') &&
+    sin.confessionTasks && 
+    Array.isArray(sin.confessionTasks) && 
+    sin.confessionTasks.length > 0;
+
+  if (!isValidSin) {
+    return false;
+  }
+
   let condition = sin.type === sinType && sin.severity === sinSeverity;
 
   if (searchQuery) {

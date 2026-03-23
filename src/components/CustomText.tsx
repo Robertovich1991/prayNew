@@ -17,7 +17,6 @@ interface ICustomTextProps {
 }
 
 const CustomText = (props: ICustomTextProps) => {
-  console.log(props.children,'....................');
 
   const { theme } = useTheme();
   let {
@@ -41,7 +40,7 @@ const CustomText = (props: ICustomTextProps) => {
       ellipsizeMode={props.ellipsizeMode}
       numberOfLines={props.numberOfLines}
       onPress={props.onPress}
-      style={[props.style, { fontSize, color, lineHeight, fontFamily }]}
+      style={[props.style, { fontSize, color, lineHeight, fontFamily, }]}
     >
       {props.children}
     </Text>

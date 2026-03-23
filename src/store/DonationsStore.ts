@@ -228,7 +228,7 @@ async sendTransactionSub(data: { transactionId: string }) {
   try {
 
     // Construct the full URL based on your API base URL and route
-    const url = 'https://app.prayersforafrica.org/api/purchases/apple-subscription'
+    const url = 'https://app.romeblogue.store/api/purchases/apple-subscription'
 
     // Prepare the request body
     const body = {

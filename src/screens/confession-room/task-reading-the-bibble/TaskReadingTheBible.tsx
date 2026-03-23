@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
+import { View, StyleSheet, ScrollView, Alert } from 'react-native';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { observer } from 'mobx-react';
 
@@ -8,6 +8,8 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import { ConfessionRoomNavigationProps } from '../../../navigation/navigationProps';
 
 import store from '../../../store';
+import { T_KEYS } from '../../../assets/translations';
+import useOwnTranslation from '../../../hooks/useOwnTranslation';
 
 import { useLanguageBasedStructure as language } from '../../../hooks';
 import { responsiveWidth } from '../../../common/utils';
@@ -23,6 +25,7 @@ import RedemptionTaskHeader from '../widgets/RedemptionTaskHeader';
 const RedemptionReadingTheBible = () => {
   const navigation =
     useNavigation<StackNavigationProp<ConfessionRoomNavigationProps>>();
+  const t = useOwnTranslation;
 
   const { params } =
     useRoute<
@@ -53,8 +56,33 @@ const RedemptionReadingTheBible = () => {
     );
   };
 
+  const handleContactPastor = () => {
+    if (store.userStore.isUserBlessed) {
+      // User is blessed, navigate to online pastor screen
+      navigation.navigate(Routes.PRIEST_ONLINE);
+    } else {
+      // User is not blessed, show subscription alert
+      Alert.alert(
+        t(T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_REQUIRED),
+        t(T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_MESSAGE),
+        [
+          {
+            text: t(T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_CANCEL),
+            style: 'cancel',
+          },
+          {
+            text: t(T_KEYS.CONTACT_PASTOR_SUBSCRIPTION_SUBSCRIBE),
+            onPress: () => {
+              navigation.navigate(Routes.TARIF_SCREEN);
+            },
+          },
+        ]
+      );
+    }
+  };
+
   return (
-    <ScrollView style={styles.fullContainer}>
+    <View style={styles.fullContainer}>
       <RedemptionTaskHeader
         onBeginRedemptionPressed={onBeginRedemptionPressed}
         isRedemptionButtonEnabled={isRedemptionButtonEnabled}
@@ -62,7 +90,7 @@ const RedemptionReadingTheBible = () => {
         title="Reading the Bible"
       />
 
-      <View style={styles.content}>
+      <ScrollView nestedScrollEnabled style={styles.content}>
         <RedemptionContentElement title="Instructions for the task">
           <CustomText
             fontSize={responsiveWidth(12)}
@@ -84,7 +112,7 @@ const RedemptionReadingTheBible = () => {
           <Divider height={responsiveWidth(12)} />
           <CustomButton
             title={'Contact the pastor'}
-            onPress={() => {}}
+            onPress={handleContactPastor}
             style={styles.contactThePastorButton}
             btnTextStyle={styles.contactThePastorButtonText}
           />
@@ -104,8 +132,8 @@ const RedemptionReadingTheBible = () => {
           />
         </RedemptionContentElement>
         <Divider height={responsiveWidth(44)} />
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 
@@ -114,7 +142,7 @@ const styles = StyleSheet.create({
     width: WINDOW_WIDTH,
     height: SCREEN_HEIGHT,
     backgroundColor: '#191919',
-    paddingTop:40
+    paddingTop:50
   },
   content: {
     paddingHorizontal: responsiveWidth(20),

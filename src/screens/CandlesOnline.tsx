@@ -7,17 +7,21 @@ import Container from '../components/Container';
 import useOwnTranslation from 'hooks/useOwnTranslation';
 import CustomText from 'components/CustomText';
 import { useTheme } from '@rneui/themed';
+import { T_KEYS } from 'assets/translations';
 import store from 'store';
 import { restApiRoutes } from 'constants/rest-api';
 import MediumCandleUnlight from '../assets/img/candleUnlightMedium.jpg';
 import BigCandleUnlight from '../assets/img/candleUnlightBig.jpg';
 import SmallCandle from '../assets/img/smallCandle.png';
 import MediumCandle from '../assets/img/mediumCandle.jpg';
-import BigCandle from '../assets/img/bigCandle.jpg';
-import SmallCandleLight from '../assets/img/smallCandleLight.jpg';
-import MediumCandleLight from '../assets/img/mediumCandleLight.jpg';
-import BigCandleLight from '../assets/img/bigCandleLight.jpg';
+import BigCandle from '../assets/img/candleUnlightBig.jpg';
+import SmallCandleLight from '../assets/img/smallCandleLight.png';
+import MediumCandleLight from '../assets/img/mediumCandleLight.png';
+import BigCandleLight from '../assets/img/bigCandleLight.png';
 import LightCandle from '../assets/img/lightCandleLight.gif'
+import CandleLight from '../assets/img/candleLight.gif'
+import { useTranslation } from 'react-i18next';
+
 import Video from 'react-native-video';
 // import ToggleSwitch from 'components/ToggleSwitch';
 import { useNavigation, useRoute } from '@react-navigation/native';
@@ -45,7 +49,7 @@ interface CandleItem {
 }
 
 const CandlesOnline = () => {
-  const t = useOwnTranslation;
+  const {t} = useTranslation();
   const { theme } = useTheme();
   const route = useRoute();
   const navigation=useNavigation()
@@ -60,11 +64,11 @@ const CandlesOnline = () => {
   const [candlesArray, setCandlesArray] = useState<CandleItem[]>([]);
   const [activeCandle, setActiveCandle] = useState<CandleItem | null>(null);
   const [activeCandleSize, setActiveCandleSize] = useState<'small' | 'medium' | 'large' | ''>('');
-  const sizes = [
-    { value: 'small', label: 'Small' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'large', label: 'Big' },
-  ];
+  const sizes = React.useMemo(() => [
+    { value: 'small', label: `${t(T_KEYS.CANDLE_SIZE_SMALL)} Candle ` },
+    { value: 'medium', label: `${t(T_KEYS.CANDLE_SIZE_MEDIUM)} Candle` },
+    { value: 'large', label: `${t(T_KEYS.CANDLE_SIZE_BIG)}\nCandle` },
+  ], [t]);
 
   useEffect(() => {
     fetchMyCandlesData();
@@ -84,25 +88,28 @@ const candleQuotes = [
   "A candle burns not only for remembrance, but for renewal.",
 ];
 
-const getRandomQuote = () => {
+const getRandomQuote = React.useCallback(() => {
+  if (!candleQuotes || candleQuotes.length === 0) {
+    return "Light a candle, and darkness will disappear.";
+  }
   const randomIndex = Math.floor(Math.random() * candleQuotes.length);
   return candleQuotes[randomIndex];
-};
+}, [candleQuotes]);
 
  
   const showRandomCandleAlert = () => {
     const quote = getRandomQuote();
 
     Alert.alert(
-      '🕯️ Light a Candle',
+      t(T_KEYS.LIGHT_A_CANDLE_ALERT_TITLE),
       quote,
       [
         {
-          text: 'Cancel',
+          text: t(T_KEYS.LIGHT_A_CANDLE_ALERT_CANCEL),
           style: 'cancel', // makes it look like a cancel action
         },
         {
-          text: 'OK',
+          text: t(T_KEYS.LIGHT_A_CANDLE_ALERT_OK),
           onPress: () => {
             handleLightCandle()// Logs after pressing OK
           },
@@ -166,7 +173,9 @@ const getRandomQuote = () => {
           setCandlesArray(fetchedCandles);
           console.log('Fetched candles array:', fetchedCandles);
           console.log('Active candles array:', activeFetchedCandles);
-        if(activeFetchedCandles[0]) { setActiveCandleSize(activeFetchedCandles[0].candleSize);}
+        if(Array.isArray(activeFetchedCandles) && activeFetchedCandles.length > 0) { 
+          setActiveCandleSize(activeFetchedCandles[0].candleSize);
+        }
           // Check for active (lit) candles
           const litCandle = Array.isArray(activeFetchedCandles)
             ? activeFetchedCandles.find((candle: CandleItem) => candle.status === 'active')
@@ -204,11 +213,13 @@ const getRandomQuote = () => {
             large: 0,
           };
 
-          fetchedCandles.forEach((candle: CandleItem) => {
-            if (candle.status === 'purchased' && candle.candleSize) {
-              counts[candle.candleSize] = (counts[candle.candleSize] || 0) + 1;
-            }
-          });
+          if (Array.isArray(fetchedCandles)) {
+            fetchedCandles.forEach((candle: CandleItem) => {
+              if (candle.status === 'purchased' && candle.candleSize) {
+                counts[candle.candleSize] = (counts[candle.candleSize] || 0) + 1;
+              }
+            });
+          }
 
           setCandleData(counts);
           console.log('Candle sizes counted:', counts);
@@ -229,23 +240,21 @@ const getRandomQuote = () => {
 
     console.log('Getting image for size:', sizeToShow, 'Theme mode:', theme.mode);
 
-    if (theme.mode === 'light') {
-      if (sizeToShow === 'small' && !activeCandleSize) return SmallCandleLight;
-      else if (sizeToShow === 'medium' && !activeCandleSize) return MediumCandleLight;
-      else if (sizeToShow === 'large' && !activeCandleSize)  return BigCandleLight;
-      else if (activeCandleSize === 'small') return LightCandle
-      else if (activeCandleSize === 'medium') return LightCandle;
-      else if (activeCandleSize === 'large') return LightCandle;
+    // For unlit candles, use theme-appropriate image
+    if (!activeCandleSize) {
+      if (theme.mode === 'light') {
+        return SmallCandleLight;
+      } else {
+        return BigCandle;
+      }
     } else {
-      // Dark mode
-      if (sizeToShow === 'small'&& !activeCandleSize) return SmallCandle;
-      else if (sizeToShow === 'medium' && !activeCandleSize) return MediumCandle;
-      else if (sizeToShow === 'large' && !activeCandleSize ) return BigCandleUnlight;
-      else if (activeCandleSize === 'small') return LightCandle;
-      else if (activeCandleSize === 'medium') return LightCandle;
-      else if (activeCandleSize === 'large') return LightCandle
+      // For lit candles, use theme-appropriate animated image
+      if (theme.mode === 'light') {
+        return LightCandle;
+      } else {
+        return CandleLight;
+      }
     }
-    return SmallCandle; // default
   };
 
   // Get the quantity of currently selected size
@@ -255,9 +264,9 @@ const getRandomQuote = () => {
   const handleLightCandle = async () => {
     try {
       // Find the first purchased candle of the selected size
-      const candleToLight = candlesArray.find(
+      const candleToLight = Array.isArray(candlesArray) ? candlesArray.find(
         (candle) => candle.candleSize === selectedSize && candle.status === 'purchased'
-      );
+      ) : null;
 
       if (!candleToLight) {
         console.log('No candle found to light');
@@ -294,19 +303,27 @@ const getRandomQuote = () => {
 
   return (
     <Container>
-      <View
-        style={{ justifyContent: 'space-between', flex: 1, paddingBottom: 50 }}
-      >
+    <View
+  style={{
+    justifyContent: 'space-between',
+    flex: 1,
+    backgroundColor:
+      theme.mode === 'light'
+        ? '#FBFCFC'
+        : 'black',
+    paddingBottom: 50,
+  }}
+>
         <View>
           <View style={{ zIndex: 4 }}>
             <TopBar
               backArrow={true}
-              textStyle={{ color: 'white' }}
-              text="Candles Subscription"
+              textStyle={{ color: 'black' }}
+           //   text={t(T_KEYS.MY_CANDLES)}
             />
           </View>
           {/* <ToggleSwitch /> */}
-          <CustomText fontSize={32} style={{ zIndex: 10, textAlign: 'center', fontWeight: '700', paddingTop: 50 }}>{candles} MY CANDLES</CustomText>
+          {/* <CustomText fontSize={32} style={{ zIndex: 10, textAlign: 'center', fontWeight: '700', paddingTop: 50 }}>{candles} MY CANDLES</CustomText> */}
           {/* <Amount style={{ zIndex: 77, alignSelf: 'center', marginTop: 5 }} /> */}
           {/* Active Candle Message */}
           {/* Candle Size Selector */}
@@ -342,14 +359,18 @@ const getRandomQuote = () => {
 
         </View>
         <View style={styles.videoContainer}>
-          <Image style={{ height: '100%', width: '90%' }} resizeMode="cover" source={getCurrentCandleImage()} />
-
-          {/* <Video
-            source={require('../assets/videos/sin-cards/online-candles.mp4')}
-            resizeMode="cover"
-            repeat
-            style={styles.video}
-          /> */}
+          <Image 
+            style={{ 
+              alignSelf: 'center', 
+              height: responsiveHeight(650), 
+              width: activeCandleSize ? responsiveWidth(180) : 
+                     selectedSize === 'small' ? responsiveWidth(100) : 
+                     selectedSize === 'medium' ? responsiveWidth(120) : 
+                     responsiveWidth(140)
+            }} 
+            resizeMode='contain' 
+            source={getCurrentCandleImage()} 
+          />
         </View>
         {/* Message or Button */}
         <View style={{gap:8}}>
@@ -379,7 +400,7 @@ const getRandomQuote = () => {
               onPress={showRandomCandleAlert}
             >
               <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
-                Light a candle
+                {t(T_KEYS.LIGHT_A_CANDLE)}
               </CustomText>
             </TouchableOpacity>
             
@@ -388,9 +409,9 @@ const getRandomQuote = () => {
               style={styles.purchaseButton}
               onPress={()=>navigation.navigate (Routes.CANDLES_SCREEN)}
             >
-              <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
-                Buy candles 
-              </CustomText>
+               <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
+                 {t(T_KEYS.BUY_CANDLES)}
+               </CustomText>
             </TouchableOpacity>
         </View>
       </View>
@@ -590,8 +611,8 @@ const styles = StyleSheet.create({
 
   videoContainer: {
     position: 'absolute',
-    width: width,
-    height: height,
+    width: '100%',
+    height: '100%',
   },
   video: {
     width: '90%',

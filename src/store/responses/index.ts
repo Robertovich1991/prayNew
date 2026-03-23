@@ -1,6 +1,7 @@
 export enum SupportedLanguages {
   ENGLISH = 'en',
   FRANCAISE = 'fr',
+  ESPANOL = 'es',
 }
 
 export declare class BaseResponse<T, E> {

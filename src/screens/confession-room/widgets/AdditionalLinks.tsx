@@ -46,6 +46,7 @@ const AdditionalLinks: React.FC<{
                 style={styles.linkText}
                 ellipsizeMode="tail"
                 numberOfLines={1}
+                color={"white"}
               >
                 {url}
               </CustomText>
@@ -60,7 +61,6 @@ const AdditionalLinks: React.FC<{
 
 const styles = StyleSheet.create({
   additionalLinksWrapper: {
-    height: responsiveWidth(152),
     borderRadius: responsiveWidth(12),
     padding: responsiveWidth(12),
     backgroundColor: '#000',

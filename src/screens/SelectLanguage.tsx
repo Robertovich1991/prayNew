@@ -37,7 +37,7 @@ const SelectLanguage = () => {
             }}
           />
         </View>
-        <View>
+        <View style={styles.btnWrapper}>
           <CustomButton
             btnTextStyle={{
               ...styles.btnTextStyle,
@@ -50,6 +50,23 @@ const SelectLanguage = () => {
               store.commonStore.setSettings({
                 ...store.commonStore.settings,
                 language: 'fr',
+              });
+            }}
+          />
+        </View>
+        <View>
+          <CustomButton
+            btnTextStyle={{
+              ...styles.btnTextStyle,
+              color: theme.colors.textColorTertiary,
+            }}
+            height={responsiveWidth(60)}
+            backgroundColor={theme.colors.buttonTertiary}
+            title={t(T_KEYS.SPANISH)}
+            onPress={() => {
+              store.commonStore.setSettings({
+                ...store.commonStore.settings,
+                language: 'es',
               });
             }}
           />

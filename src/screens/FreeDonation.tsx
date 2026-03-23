@@ -107,7 +107,7 @@
     if (error instanceof PurchaseError) {
       console.log({ message: `[${error.code}]: ${error.message}`, error });
     } else {
-      Alert.alert(
+      console.log(
         'Purchase error',
         'Try again later',
         [{ text: 'OK' }],

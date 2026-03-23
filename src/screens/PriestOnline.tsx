@@ -179,9 +179,7 @@ const PriestOnline = () => {
                 borderRadius: responsiveWidth(5),
               }}
             >
-              <CustomText color={theme.colors.textColorSecondary} fontSize={responsiveWidth(10)}>
-                {store.chatStore.isPastorTyping ? 'Hide' : 'Show'} Typing
-              </CustomText>
+            
             </TouchableOpacity>
 
 
@@ -222,7 +220,7 @@ const PriestOnline = () => {
                 <AnimatedDots />
               </View>
             </View>
-                    )}
+          )}
             <View
             style={
               keyboardShown ? styles.inputWrapperKeyboard : styles.inputWrapper

@@ -59,6 +59,7 @@ const CatalogOfSins = () => {
         <SinTypeSelector
           initialValue={sinType}
           onValueChanged={onSinTypeChanged}
+          sinSeverity={sinSeverity}
         />
         <Divider height={responsiveWidth(12)} />
         <FlatList
