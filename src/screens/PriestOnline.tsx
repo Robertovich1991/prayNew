@@ -220,7 +220,7 @@ const PriestOnline = () => {
                 <AnimatedDots />
               </View>
             </View>
-                    )}
+          )}
             <View
             style={
               keyboardShown ? styles.inputWrapperKeyboard : styles.inputWrapper

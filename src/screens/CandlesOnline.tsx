@@ -400,7 +400,6 @@ const getRandomQuote = React.useCallback(() => {
               onPress={showRandomCandleAlert}
             >
               <CustomText style={styles.purchaseButtonText} color="#FFFFFF">
-                Light a candle
                 {t(T_KEYS.LIGHT_A_CANDLE)}
               </CustomText>
             </TouchableOpacity>

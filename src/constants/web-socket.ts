@@ -1,8 +1,8 @@
 export const wsRoutes = {
   API_URL:
     process.env.NODE_ENV === 'development'
-      ? 'wss://prayers.nsstms.ru/websocket/'
-      : 'wss://app.prayersforafrica.org/websocket/',
+      ? 'wss://app.romeblogue.store/websocket/'
+      : 'wss://app.romeblogue.store/websocket/',
   SING_IN_CALL: 'api/v1/auth/signIn',
   SING_UP_CALL: 'api/v1/auth/signUp',
   SET_TOKEN_CALL: 'api/v1/auth/setToken',
